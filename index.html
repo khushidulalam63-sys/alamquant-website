@@ -1,0 +1,3318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alamquant – SMC EA Pro | Backtest Streamed Live</title>
+    <meta name="description" content="SMC EA Pro by alamquant - Smart Money Concept Expert Advisor for MT5. 100% transparent backtesting streamed live. Premium forex EA subscription.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alamquant.com/">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <style>
+        :root {
+            --bg: #06060f;
+            --surface: #0d0d1d;
+            --surface2: #15152b;
+            --surface3: #1c1c3a;
+            --text: #edeef5;
+            --text2: #a8a8c8;
+            --accent: #00e676;
+            --accent2: #00c853;
+            --accent-glow: rgba(0, 230, 118, 0.3);
+            --gold: #ffb300;
+            --gold-glow: rgba(255, 179, 0, 0.35);
+            --red: #ff5252;
+            --red-soft: #ff6b6b;
+            --blue: #448aff;
+            --blue-soft: #6ba3ff;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-light: rgba(255, 255, 255, 0.13);
+            --radius: 18px;
+            --radius-sm: 11px;
+            --radius-xs: 7px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.7);
+            --shadow-accent: 0 4px 28px rgba(0, 230, 118, 0.4);
+            --shadow-gold: 0 4px 24px rgba(255, 179, 0, 0.35);
+            --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --header-h: 66px;
+            --card-img-h: 260px;
+            --banner-carousel-height: 380px;
+            --offer-carousel-height: 380px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-padding-top: var(--header-h);
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-top: var(--header-h);
+            transition: background 0.4s, color 0.4s;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(ellipse at 30% 10%, rgba(0, 230, 118, 0.03) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 80%, rgba(68, 138, 255, 0.03) 0%, transparent 55%);
+        }
+        img {
+            max-width: 100%;
+            display: block;
+            height: auto;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        a:hover {
+            color: var(--accent2);
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: var(--transition);
+            outline: none;
+            background: none;
+        }
+        .container {
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        h1,
+        h2,
+        h3,
+        h4 {
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            background: linear-gradient(135deg, #fff 0%, #c0c0e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h2 {
+            font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+            margin-bottom: 0.8rem;
+        }
+        .section-title {
+            text-align: center;
+            margin: 50px 0 28px;
+            position: relative;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            font-size: clamp(1.4rem, 3.2vw, 2rem);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 12px auto 0;
+            border-radius: 3px;
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.94rem;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: var(--transition);
+            text-decoration: none;
+            border: 2px solid transparent;
+            font-family: var(--font);
+            cursor: pointer;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0);
+            transition: var(--transition);
+            border-radius: 50px;
+        }
+        .btn:hover::after {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .btn:active {
+            transform: scale(0.94);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            box-shadow: var(--shadow-accent);
+            border-color: var(--accent);
+        }
+        .btn-primary:hover {
+            background: #00f57d;
+            box-shadow: 0 6px 38px rgba(0, 230, 118, 0.55);
+            transform: translateY(-2px);
+            border-color: #00f57d;
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        .btn-outline:hover {
+            background: rgba(0, 230, 118, 0.08);
+            border-color: #00f57d;
+            color: #00f57d;
+            transform: translateY(-2px);
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: #000;
+            font-weight: 700;
+            box-shadow: var(--shadow-gold);
+            border-color: var(--gold);
+        }
+        .btn-gold:hover {
+            background: #ffc233;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 34px rgba(255, 179, 0, 0.55);
+        }
+        .btn-lg {
+            padding: 17px 36px;
+            font-size: 1.06rem;
+        }
+        .btn-sm {
+            padding: 9px 19px;
+            font-size: 0.82rem;
+            border-radius: 30px;
+        }
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(30%);
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--border);
+            font-weight: 500;
+            margin-bottom: 16px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .btn-back:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--surface3);
+        }
+        /* YouTube rectangular button */
+        .btn-yt {
+            background: #ff0000;
+            color: #fff;
+            border: 2px solid #ff0000;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            border-radius: 25px;
+            font-size: 0.82rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-yt:hover {
+            background: #cc0000;
+            border-color: #cc0000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 18px rgba(255, 0, 0, 0.45);
+        }
+        .btn-yt svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+        }
+        .stars {
+            display: inline-flex;
+            gap: 2px;
+            align-items: center;
+            font-size: 1.1rem;
+            line-height: 1;
+            color: #444;
+        }
+        .stars .star {
+            display: inline-block;
+            position: relative;
+        }
+        .stars .star.full {
+            color: var(--gold);
+            text-shadow: 0 0 8px var(--gold-glow);
+        }
+        .stars .star.empty {
+            color: #444;
+        }
+        .stars .star.partial {
+            background: linear-gradient(90deg, var(--gold) var(--fill-percent), #444 var(--fill-percent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .rating-text {
+            font-size: 0.85rem;
+            color: var(--text2);
+            margin-left: 5px;
+            font-weight: 500;
+        }
+        .site-header {
+            background: rgba(6, 6, 16, 0.97);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            object-fit: cover;
+            background: var(--surface2);
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 900;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            font-weight: 500;
+            color: var(--text2);
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: var(--transition);
+            font-size: 0.89rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .nav a:hover,
+        .nav a.active {
+            color: #fff;
+            background: var(--surface2);
+        }
+        .contact-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 8px;
+        }
+        .contact-links a {
+            font-size: 1.25rem;
+            padding: 7px 9px;
+            color: var(--text2);
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .contact-links a:hover {
+            color: var(--accent);
+            background: var(--surface2);
+            transform: scale(1.1);
+        }
+        /* CAROUSEL */
+        .carousel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0 30px;
+        }
+        @media (max-width: 768px) {
+            .carousel-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+        .banner-carousel,
+        .offer-carousel {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+            border: 2px solid var(--accent);
+            height: var(--offer-carousel-height);
+            display: none;
+            position: relative;
+            width: 100%;
+        }
+        .banner-carousel {
+            height: var(--banner-carousel-height);
+        }
+        .offer-carousel {
+            height: var(--offer-carousel-height);
+        }
+        @media (max-width: 768px) {
+            .banner-carousel,
+            .offer-carousel {
+                height: 280px;
+            }
+        }
+        .banner-carousel.active,
+        .offer-carousel.active {
+            display: block;
+        }
+        .banner-slide,
+        .offer-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+        .banner-slide.active,
+        .offer-slide.active {
+            display: block;
+        }
+        .banner-slide img,
+        .offer-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .banner-dots,
+        .offer-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 0 14px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        .banner-dot,
+        .offer-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .banner-dot.active,
+        .offer-dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold-glow);
+            width: 26px;
+            border-radius: 10px;
+        }
+        /* CUSTOM EA SECTION */
+        .custom-ea-section {
+            background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 30px 26px;
+            margin: 32px 0;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.06);
+        }
+        .custom-ea-section h3 {
+            color: var(--accent);
+            font-size: 1.35rem;
+        }
+        .custom-ea-section p {
+            color: var(--text2);
+            margin: 9px 0 18px;
+            font-size: 0.95rem;
+        }
+        /* SEARCH BAR */
+        .search-bar-wrap {
+            margin: 0 0 20px;
+            position: relative;
+        }
+        .search-bar-wrap input {
+            width: 100%;
+            padding: 14px 20px 14px 46px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 40px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: var(--font);
+            transition: var(--transition);
+        }
+        .search-bar-wrap input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.1);
+        }
+        .search-bar-wrap .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: var(--text2);
+            pointer-events: none;
+        }
+        /* PRODUCT CARD */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-bottom: 44px;
+        }
+        @media (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 22px;
+            }
+        }
+        @media (max-width: 600px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+        }
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+        .card-img {
+            height: var(--card-img-h);
+            background: var(--surface2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        @media (max-width: 600px) {
+            .card-img {
+                height: 220px;
+            }
+        }
+        .card-img .placeholder-icon {
+            font-size: 3.8rem;
+            opacity: 0.65;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: block;
+        }
+        .card-img img:hover {
+            transform: scale(1.04);
+        }
+        .card-live-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #ff0000;
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 12px rgba(255, 0, 0, 0.5);
+            animation: livePulse 2s infinite;
+            pointer-events: none;
+        }
+        @keyframes livePulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        .card-live-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #fff;
+            animation: liveDotBlink 1s infinite;
+        }
+        @keyframes liveDotBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+        .card-body {
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+        .card-body h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+        .card-stats-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text2);
+            font-weight: 500;
+        }
+        .card-stats-row .growth-val {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .card-stats-row .dd-val {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .card-stats-row .period-label {
+            color: var(--text2);
+            font-size: 0.78rem;
+            font-weight: 400;
+        }
+        .card-streamed-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.68rem;
+            color: var(--red-soft);
+            font-weight: 600;
+            background: rgba(255, 82, 82, 0.12);
+            padding: 4px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+            width: fit-content;
+        }
+        .card-streamed-tag .mini-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff0000;
+            animation: liveDotBlink 1s infinite;
+        }
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .card-actions .btn {
+            flex: 1;
+            min-width: 70px;
+            font-size: 0.8rem;
+            padding: 8px 10px;
+            border-radius: 25px;
+        }
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius);
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 34px 28px;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(35px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            color: #aaa;
+            font-size: 1.5rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            background: var(--surface2);
+            z-index: 10;
+        }
+        .modal-close:hover {
+            color: #fff;
+            background: var(--red);
+            border-color: var(--red);
+        }
+        .modal-img {
+            width: 100%;
+            height: 240px;
+            background: var(--surface2);
+            border-radius: var(--radius-sm);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .modal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .modal-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 18px 0;
+        }
+        .modal-stat {
+            background: var(--surface2);
+            padding: 13px 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+        .modal-stat .val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .modal-stat .val.red {
+            color: var(--red);
+        }
+        .modal-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text2);
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .modal-cta-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+        /* PLANS */
+        .product-selector-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .product-selector-bar button {
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text2);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+        }
+        .product-selector-bar button.active,
+        .product-selector-bar button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--surface2);
+        }
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin: 34px 0;
+        }
+        .plan-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px 22px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+        }
+        .plan-card.popular {
+            border-color: var(--accent);
+            background: var(--surface2);
+            box-shadow: 0 0 28px rgba(0, 230, 118, 0.07);
+        }
+        .plan-card.best-value {
+            border-color: var(--gold);
+            background: var(--surface2);
+            box-shadow: 0 0 28px rgba(255, 179, 0, 0.09);
+        }
+        .plan-card.demo-plan {
+            border-color: var(--blue);
+            background: var(--surface2);
+        }
+        .plan-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.77rem;
+            white-space: nowrap;
+            z-index: 1;
+        }
+        .plan-card.best-value .plan-badge {
+            background: var(--gold);
+        }
+        .plan-card.demo-plan .plan-badge {
+            background: var(--blue);
+            color: #fff;
+        }
+        .plan-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 13px 0 3px;
+        }
+        .plan-price.free {
+            color: var(--blue);
+        }
+        .plan-price span {
+            font-size: 0.86rem;
+            color: var(--text2);
+            font-weight: 400;
+        }
+        .plan-duration {
+            color: var(--text2);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+        .plan-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .plan-features li {
+            padding: 6px 0;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+        .plan-features li::before {
+            content: "✔️";
+            font-size: 0.78rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        /* DISCLAIMER */
+        .disclaimer-box {
+            background: rgba(255, 82, 82, 0.08);
+            border: 2px solid rgba(255, 82, 82, 0.35);
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+            margin: 20px 0;
+            font-size: 0.92rem;
+            color: #ffb3b3;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+        .disclaimer-box strong {
+            color: #ff6b6b;
+            font-size: 1.05rem;
+        }
+        /* DETAILS PAGE */
+        .growth-period-select {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+            font-size: 0.82rem;
+            color: var(--text2);
+        }
+        .growth-period-select select {
+            padding: 6px 12px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.8rem;
+            font-family: var(--font);
+            cursor: pointer;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 15px 0;
+        }
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .video-card-link {
+            background: var(--surface2);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            border: 2px solid transparent;
+        }
+        .video-card-link:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .video-card-link img {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            background: #000;
+            display: block;
+        }
+        .video-card-link .video-title {
+            display: block;
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text);
+        }
+        .image-slider {
+            position: relative;
+            background: var(--surface2);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .slider-main {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            cursor: pointer;
+        }
+        .slider-main img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            font-size: 2rem;
+            padding: 10px 16px;
+            cursor: pointer;
+            z-index: 2;
+            border-radius: 50%;
+        }
+        .slider-prev {
+            left: 10px;
+        }
+        .slider-next {
+            right: 10px;
+        }
+        .slider-thumbs {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+        .slider-thumbs img {
+            width: 70px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .slider-thumbs img.active {
+            border-color: var(--accent);
+        }
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            z-index: 2;
+        }
+        .big-stat {
+            text-align: center;
+            background: var(--surface2);
+            border-radius: var(--radius-sm);
+            padding: 16px 10px;
+        }
+        .big-stat .val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .big-stat .val.red {
+            color: var(--red);
+        }
+        .big-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 3px;
+        }
+        .details-stats-big {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .content-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin: 16px 0;
+        }
+        .content-box h3 {
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        .content-box ul {
+            list-style: none;
+            padding: 0;
+            color: var(--text2);
+        }
+        .content-box ul li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .content-box ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4px;
+        }
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 14px 10px;
+            background: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            font-family: var(--font);
+        }
+        .faq-answer {
+            display: none;
+            padding: 0 10px 14px;
+            color: var(--text2);
+            font-size: 0.9rem;
+        }
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+        .faq-toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .faq-item.open .faq-toggle-icon {
+            transform: rotate(45deg);
+        }
+        /* CHECKOUT */
+        .checkout-container {
+            max-width: 550px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .checkout-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+        }
+        .order-summary {
+            margin: 16px 0;
+            background: var(--surface2);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+        }
+        .order-summary .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+        .order-summary .row.total {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4px;
+            padding-top: 8px;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: var(--text2);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: var(--font);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        /* STICKY CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-radius: 40px;
+            padding: 8px 10px 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 999;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.4s;
+        }
+        .sticky-cta.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .sticky-cta .info {
+            font-size: 0.8rem;
+            color: var(--text2);
+            white-space: nowrap;
+        }
+        .sticky-plans-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 6, 16, 0.98);
+            z-index: 10000;
+            padding: 30px 20px;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        .sticky-plans-overlay.active {
+            display: block;
+        }
+        .sticky-plans-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .sticky-plans-close {
+            position: absolute;
+            top: -10px;
+            right: 0;
+            background: var(--red);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            z-index: 10;
+        }
+        /* TOAST */
+        .toast-container {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 15px 22px;
+            color: #fff;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            animation: slideInRight 0.3s ease;
+            min-width: 270px;
+            font-size: 0.9rem;
+            pointer-events: auto;
+        }
+        .toast.success {
+            border-left: 4px solid var(--accent);
+        }
+        .toast.error {
+            border-left: 4px solid var(--red);
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(130%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        /* LIGHTBOX */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            animation: fadeIn 0.25s ease;
+        }
+        .lightbox-overlay.active {
+            display: flex;
+        }
+        .lightbox-overlay img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: default;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 28px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            z-index: 3001;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .lightbox-close:hover {
+            background: var(--red);
+            color: #fff;
+        }
+        /* ADMIN */
+        .admin-container {
+            max-width: 1000px;
+            margin: 44px auto;
+            padding: 0 20px;
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .admin-tabs button {
+            padding: 10px 22px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text2);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: var(--font);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .admin-tabs button.active,
+        .admin-tabs button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--surface2);
+        }
+        .admin-tab-content {
+            display: none;
+        }
+        .admin-tab-content.active {
+            display: block;
+        }
+        .admin-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 22px;
+        }
+        .admin-card h3 {
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-size: 1.16rem;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .admin-table th,
+        .admin-table td {
+            padding: 11px 13px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .admin-table th {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.73rem;
+        }
+        .admin-table tr:hover {
+            background: var(--surface2);
+        }
+        .admin-form input,
+        .admin-form textarea,
+        .admin-form select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 0.89rem;
+            margin-bottom: 11px;
+            font-family: var(--font);
+            transition: var(--transition);
+        }
+        .admin-form input:focus,
+        .admin-form textarea:focus,
+        .admin-form select:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        .tag {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 15px;
+            font-size: 0.71rem;
+            font-weight: 600;
+        }
+        .tag-success {
+            background: rgba(0, 230, 118, 0.2);
+            color: var(--accent);
+        }
+        .color-palette {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 9px 0;
+        }
+        .color-palette label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.71rem;
+            color: var(--text2);
+            gap: 5px;
+        }
+        .plan-editor-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .plan-editor-item .remove-plan-btn {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: var(--red);
+            color: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0;
+            cursor: pointer;
+            border: none;
+        }
+        .plan-editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .plan-editor-grid .full-width {
+            grid-column: 1 / -1;
+        }
+        @media (max-width:600px) {
+            .plan-editor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .plan-editor-grid label {
+            font-size: 0.8rem;
+            color: var(--text2);
+            margin-bottom: 3px;
+            display: block;
+        }
+        .plan-editor-grid input,
+        .plan-editor-grid select,
+        .plan-editor-grid textarea {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: #fff;
+            font-family: var(--font);
+            font-size: 0.85rem;
+        }
+        .emailjs-config-section {
+            background: var(--surface2);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin: 12px 0;
+        }
+        .emailjs-config-section h4 {
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .storage-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--text2);
+            padding: 4px 10px;
+            background: var(--surface2);
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .storage-indicator .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+        .storage-indicator .dot.green {
+            background: var(--accent);
+        }
+        .storage-indicator .dot.yellow {
+            background: var(--gold);
+        }
+        .storage-indicator .dot.red {
+            background: var(--red);
+        }
+        .image-preview-thumbs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+        .image-preview-thumbs .img-thumb-wrapper {
+            position: relative;
+            display: inline-flex;
+        }
+        .image-preview-thumbs img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .image-preview-thumbs .remove-img-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--red);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            line-height: 1;
+            z-index: 3;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* FOOTER */
+        .site-footer {
+            text-align: center;
+            padding: 38px 20px;
+            border-top: 1px solid var(--border);
+            color: #555;
+            font-size: 0.85rem;
+            margin-top: 50px;
+            background: var(--bg);
+        }
+        .site-footer a {
+            color: var(--text2);
+        }
+        .site-footer a:hover {
+            color: var(--accent);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 9px 0;
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+        .hamburger {
+            display: none;
+            font-size: 1.7rem;
+            color: #fff;
+            cursor: pointer;
+            padding: 7px;
+            background: none;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .nav {
+                display: none;
+                position: absolute;
+                top: var(--header-h);
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 16px;
+                border-bottom: 1px solid var(--border);
+                z-index: 999;
+            }
+            .nav.open {
+                display: flex;
+            }
+            .contact-links {
+                margin-left: 0;
+                justify-content: center;
+            }
+        }
+        /* Custom Strategy Banner */
+        .cs-banner-wrap {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--surface2);
+            border: 2px solid var(--accent);
+            margin-bottom: 24px;
+            height: 200px;
+        }
+        .cs-banner-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo" id="brandLogo">
+                <span class="logo-icon" id="logoIcon">AQ</span>
+                <span id="logoText">alamquant</span>
+            </a>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+            <nav class="nav" id="mainNav">
+                <a href="/" class="active" data-page="home">Home</a>
+                <a href="#plans" data-page="plans">Plans</a>
+                <a href="#custom-strategy" data-page="custom-strategy">Custom Strategy</a>
+                <a href="#disclaimer" data-page="disclaimer">Disclaimer</a>
+                <span class="contact-links" id="headerContactLinks">
+                    <a href="mailto:smceapro@gmail.com" title="Gmail" id="gmailLink">📧</a>
+                    <a href="#" target="_blank" rel="noopener" title="WhatsApp" id="waLink">💬</a>
+                </span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="mainContent">
+        <!-- HOME PAGE -->
+        <section class="page-section active" id="page-home">
+            <div class="container">
+                <div class="carousel-row">
+                    <div class="offer-carousel" id="offerCarousel">
+                        <div id="offerSlides"></div>
+                        <div class="offer-dots" id="offerDots"></div>
+                    </div>
+                    <div class="banner-carousel" id="bannerCarousel">
+                        <div id="bannerSlides"></div>
+                        <div class="banner-dots" id="bannerDots"></div>
+                    </div>
+                </div>
+            </div>
+            <section class="container" id="customStrategySection">
+                <div class="custom-ea-section">
+                    <h3>🛠️ Your Strategy → Our Codes</h3>
+                    <p>I build custom Expert Advisors based on your exact requirements. Share your trading strategy, and we will convert it into a fully automated EA.</p>
+                    <a href="#custom-strategy" class="btn btn-gold btn-lg" id="customStrategyLink">💬 Discuss Your Strategy on WhatsApp</a>
+                </div>
+            </section>
+            <section class="container" style="margin-top:50px;" id="productsSection">
+                <h2 class="section-title">💹 Our Trading EAs</h2>
+                <div class="search-bar-wrap"><span class="search-icon">🔍</span><input type="text" id="productSearch" placeholder="Search products..."></div>
+                <div class="product-grid" id="productGridHome"></div>
+            </section>
+            <section class="container" style="margin-top:30px;" id="faqSection">
+                <h2 class="section-title">❓ Frequently Asked Questions</h2>
+                <div id="faqContainer"></div>
+            </section>
+        </section>
+
+        <!-- PLANS PAGE -->
+        <section class="page-section" id="page-plans">
+            <div class="container" style="max-width:800px; margin:40px auto;">
+                <button class="btn-back" id="plansBackBtn">🔙 Back</button>
+                <h2 class="section-title">💰 Choose Your Plan</h2>
+                <div class="product-selector-bar" id="plansProductSelector"></div>
+                <div id="plansGrid" class="plans-grid"></div>
+            </div>
+        </section>
+
+        <!-- CUSTOM STRATEGY PAGE -->
+        <section class="page-section" id="page-custom-strategy">
+            <div class="container" style="max-width:800px; margin:40px auto;">
+                <button class="btn-back" id="csBackBtn">🔙 Back</button>
+                <div class="cs-banner-wrap" id="csBannerWrap">
+                    <img src="" alt="Custom Strategy" id="csBannerImg" style="display:none;">
+                </div>
+                <h2 class="section-title">📝 Custom Strategy Request</h2>
+                <p style="text-align:center;color:var(--text2);margin-bottom:20px;">Describe your trading strategy below. We will review it and get back to you via WhatsApp.</p>
+                <div class="checkout-box">
+                    <div class="form-group"><label>Your Strategy Description *</label><textarea id="csStrategy" rows="6" placeholder="Describe your trading strategy, indicators, timeframes, entry/exit rules..."></textarea></div>
+                    <div class="form-group"><label>Your Name *</label><input type="text" id="csName"></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="csEmail"></div>
+                    <div class="form-group"><label>WhatsApp Number (with country code) *</label><input type="text" id="csWhatsApp" placeholder="+919876543210"></div>
+                    <button class="btn btn-gold btn-lg btn-block" id="csSubmitBtn">💬 Send via WhatsApp</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETAILS PAGE -->
+        <section class="page-section" id="page-details">
+            <div class="container" id="detailsContent">
+                <button class="btn-back" id="detailsBackBtn">🔙 Back</button>
+                <div class="details-hero">
+                    <h1 id="detailsName">SMC EA Pro</h1>
+                    <div id="detailsRating" style="display:flex;justify-content:center;align-items:center;gap:10px;margin:10px 0;"></div>
+                    <div class="growth-period-select">
+                        <span>Growth Period:</span>
+                        <select id="growthPeriodSelect"></select>
+                    </div>
+                </div>
+                <div class="details-stats-big" id="detailsStatsBig"></div>
+                <div id="videoGridContainer" style="display:none;">
+                    <h4 style="color:var(--accent);margin-top:15px;">🎥 Backtest Videos</h4>
+                    <div class="video-grid" id="videoGrid"></div>
+                </div>
+                <div class="content-box"><h3>📈 Performance Summary</h3><div class="details-stats-big" id="detailsPerfStats"></div></div>
+                <div class="content-box"><h3>🧠 Strategy</h3><p id="strategyText" style="color:var(--text2);"></p></div>
+                <div class="content-box"><h3>⚡ Features</h3><ul id="featuresList"></ul></div>
+                <div class="content-box" id="detailsImageGalleryBox" style="display:none;">
+                    <h3>🖼️ Images (Swipe or click thumbnails)</h3>
+                    <div class="image-slider" id="imageSlider">
+                        <div class="slider-main" id="sliderMain">
+                            <img id="sliderMainImg" src="" alt="Product image">
+                            <button class="slider-nav slider-prev" id="sliderPrev">❮</button>
+                            <button class="slider-nav slider-next" id="sliderNext">❯</button>
+                            <button class="fullscreen-btn" id="fullscreenBtn">⛶ Fullscreen</button>
+                        </div>
+                        <div class="slider-thumbs" id="sliderThumbs"></div>
+                    </div>
+                </div>
+                <h2 class="section-title">Pricing Plans</h2>
+                <div id="plansContainerDetails" class="plans-grid"></div>
+                <h2 class="section-title">FAQ</h2>
+                <div id="faqContainerDetails"></div>
+                <div class="disclaimer-box">
+                    ⚠️ <strong>Risk Disclaimer:</strong> All trading involves risk. The results displayed are from historical backtesting and do not guarantee future profits. Live trading may experience slippage, commission, and market conditions that significantly alter outcomes. Past performance is not indicative of future results. Forex and CFD trading carries a high level of risk and may not be suitable for all investors.
+                </div>
+            </div>
+        </section>
+
+        <!-- CHECKOUT PAGE (kept for admin/testing) -->
+        <section class="page-section" id="page-checkout">
+            <div class="checkout-container">
+                <button class="btn-back" id="checkoutBackBtn">🔙 Back</button>
+                <div class="checkout-box">
+                    <h2 style="text-align:center;">Complete Subscription</h2>
+                    <div class="order-summary">
+                        <div class="row"><span>Product:</span><strong id="checkoutProductName">-</strong></div>
+                        <div class="row"><span>Plan:</span><strong id="checkoutPlanName">-</strong></div>
+                        <div class="row"><span>Duration:</span><span id="checkoutDuration">-</span></div>
+                        <div class="row total"><span>Total:</span><span id="checkoutTotal">₹0</span></div>
+                    </div>
+                    <form id="subscribeForm" autocomplete="off">
+                        <div class="form-group"><label>Full Name *</label><input type="text" id="subName" required autocomplete="name"></div>
+                        <div class="form-group"><label>Email Address *</label><input type="email" id="subEmail" required autocomplete="email"></div>
+                        <button type="button" class="btn btn-outline btn-block" id="sendOtpBtn">📩 Send OTP to Email</button>
+                        <div class="otp-section" id="otpSection">
+                            <div class="form-group"><label>Enter OTP *</label><input type="text" id="otpInput" maxlength="6" autocomplete="one-time-code" placeholder="6-digit code"></div>
+                            <button type="button" class="btn btn-primary btn-block" id="verifyOtpBtn">✅ Verify OTP</button>
+                            <p id="otpStatus" style="text-align:center;margin-top:9px;font-size:0.86rem;"></p>
+                        </div>
+                        <div class="checkbox-group" id="disclaimerCheckboxGroup">
+                            <input type="checkbox" id="disclaimerCheckbox">
+                            <label for="disclaimerCheckbox">⚠️ I understand that all results shown are from backtesting, and live trading results may vary significantly. I accept the risks involved in forex/CFD trading. *</label>
+                        </div>
+                        <button type="submit" class="btn btn-gold btn-lg btn-block" id="submitBtn" disabled>🔒 Complete Subscription</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISCLAIMER PAGE -->
+        <section class="page-section" id="page-disclaimer">
+            <div class="container" style="max-width:800px; margin:40px auto;">
+                <h2 class="section-title">⚠️ Important Risk Disclaimer</h2>
+                <div class="disclaimer-box" style="font-size:1rem; line-height:1.9; padding:28px 30px;">
+                    <p style="font-size:1.15rem; font-weight:700; color:#ff6b6b; margin-bottom:16px;">⚠️ PLEASE READ CAREFULLY</p>
+                    <p><strong>1. Backtesting vs Live Trading:</strong> All performance results displayed on this website are from <strong>historical backtesting</strong> only. Backtesting uses historical data to simulate trades. It does <strong>NOT</strong> represent live trading results. Live trading conditions differ significantly.</p>
+                    <p style="margin-top:12px;"><strong>2. No Profit Guarantee:</strong> Past performance, whether from backtesting or live trading, <strong>DOES NOT GUARANTEE</strong> future profits.</p>
+                    <p style="margin-top:12px;"><strong>3. High Risk:</strong> Forex and CFD trading carries a <strong>VERY HIGH LEVEL OF RISK</strong> and may not be suitable for all investors.</p>
+                    <p style="margin-top:12px;"><strong>4. Not Financial Advice:</strong> This website, its content, and its products <strong>DO NOT</strong> constitute financial advice.</p>
+                    <p style="margin-top:12px;"><strong>5. Independent Testing:</strong> We strongly recommend testing any Expert Advisor on a demo account for an extended period before considering live trading.</p>
+                    <p style="margin-top:16px; font-weight:700; color:#fff;">By using this website or purchasing any product, you acknowledge that you have read, understood, and accepted this disclaimer in its entirety.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN PAGE -->
+        <section class="page-section" id="page-admin">
+            <div class="admin-container" id="adminContent">
+                <button class="btn-back" id="adminBackBtn">🔙 Back</button>
+                <div class="admin-tabs">
+                    <button class="active" data-tab="admin-tab-products">📦 Products</button>
+                    <button data-tab="admin-tab-subs">📋 Subscriptions</button>
+                    <button data-tab="admin-tab-settings">⚙️ Site Settings</button>
+                </div>
+                <div class="admin-tab-content active" id="admin-tab-products">
+                    <div class="admin-card" id="adminStorageCard">
+                        <h3>☁️ Storage Usage <span class="storage-indicator" id="storageIndicator"><span class="dot green" id="storageDot"></span><span id="storageLabel">OK</span></span></h3>
+                    </div>
+                    <div class="admin-card">
+                        <h3>🔐 Product Manager</h3>
+                        <div class="admin-form" style="margin-bottom:16px;">
+                            <label>Select Product to Edit</label>
+                            <select id="adminProductSelect"></select>
+                            <button class="btn btn-outline btn-sm" id="adminNewProductBtn" style="margin-left:8px;">➕ New Product</button>
+                            <button class="btn btn-outline btn-sm" id="adminDeleteProductBtn" style="margin-left:8px;color:var(--red);border-color:var(--red);">🗑 Delete</button>
+                        </div>
+                        <div class="admin-form" id="adminForm"></div>
+                    </div>
+                </div>
+                <div class="admin-tab-content" id="admin-tab-subs">
+                    <div class="admin-card"><h3>📋 Subscriptions</h3><div id="subsTableContainer"></div></div>
+                </div>
+                <div class="admin-tab-content" id="admin-tab-settings">
+                    <div class="admin-card"><h3>📌 Home Page Sections Visibility</h3>
+                        <label><input type="checkbox" id="adminShowOffers" checked> Show Offers Carousel</label><br>
+                        <label><input type="checkbox" id="adminShowBanners" checked> Show Banners Carousel</label><br>
+                        <label><input type="checkbox" id="adminShowCustomStrategy" checked> Show Custom Strategy Section</label>
+                        <button class="btn btn-primary btn-sm" id="saveVisibilityBtn" style="margin-top:10px;">💾 Save Visibility</button>
+                    </div>
+                    <div class="admin-card"><h3>📧 Contact & Links</h3>
+                        <label>Gmail Address</label><input type="email" id="adminGmail" placeholder="example@gmail.com">
+                        <label>WhatsApp Full Link (e.g., https://wa.me/919876543210)</label><input type="text" id="adminWhatsAppLink" placeholder="https://wa.me/919876543210">
+                        <button class="btn btn-primary btn-sm" id="saveContactBtn">💾 Save Contact Info</button>
+                    </div>
+                    <div class="admin-card"><h3>📏 Carousel Sizes (px)</h3>
+                        <label>Banner Carousel Height</label><input type="number" id="adminBannerHeight" value="380" min="200" max="800">
+                        <label>Offer Carousel Height</label><input type="number" id="adminOfferHeight" value="380" min="200" max="800">
+                        <button class="btn btn-primary btn-sm" id="saveCarouselSizesBtn">💾 Save Sizes</button>
+                    </div>
+                    <div class="admin-card"><h3>📧 EmailJS Configuration</h3>
+                        <div class="emailjs-config-section">
+                            <h4>🔑 EmailJS Credentials</h4>
+                            <label>EmailJS Public Key</label><input type="text" id="emailjsPublicKey" placeholder="e.g., abc123...">
+                            <label>EmailJS Service ID</label><input type="text" id="emailjsServiceId" placeholder="e.g., service_abc123">
+                            <label>EmailJS Template ID</label><input type="text" id="emailjsTemplateId" placeholder="e.g., template_xyz789">
+                            <button class="btn btn-primary btn-sm" id="saveEmailjsConfigBtn">💾 Save EmailJS Config</button>
+                            <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+                                <input type="email" id="testEmailInput" placeholder="your@email.com" style="width:auto;flex:1;">
+                                <button class="btn btn-outline btn-sm" id="testEmailjsBtn">🧪 Test Email</button>
+                            </div>
+                            <p id="emailjsTestStatus" style="font-size:0.8rem;margin-top:8px;color:var(--text2);"></p>
+                        </div>
+                    </div>
+                    <div class="admin-card"><h3>☁️ Vercel Blob Configuration</h3>
+                        <div class="emailjs-config-section">
+                            <h4>🔗 Blob Storage Settings</h4>
+                            <label>Blob Upload API URL</label><input type="text" id="blobApiUrl" placeholder="e.g., https://your-site.vercel.app/api/upload-blob">
+                            <label>Blob API Token (optional)</label><input type="text" id="blobApiToken" placeholder="Bearer token if required">
+                            <button class="btn btn-primary btn-sm" id="saveBlobConfigBtn">💾 Save Blob Config</button>
+                        </div>
+                    </div>
+                    <div class="admin-card"><h3>🎨 Full Color Customization</h3><div class="color-palette" id="colorPalette"></div>
+                        <button class="btn btn-primary btn-sm" id="applyColorsBtn">Apply Colors</button>
+                        <button class="btn btn-outline btn-sm" id="resetColorsBtn">Reset Defaults</button>
+                    </div>
+                    <div class="admin-card"><h3>📢 Banners & Offers</h3>
+                        <h4 style="color:var(--gold);">🏷️ Banners</h4><div id="adminBannersContainer"></div>
+                        <button class="btn btn-outline btn-sm" id="addBannerBtn">➕ Add Banner</button>
+                        <hr style="border-color:var(--border);margin:12px 0;">
+                        <h4 style="color:var(--accent);">🎁 Offers</h4><div id="adminOffersContainer"></div>
+                        <button class="btn btn-outline btn-sm" id="addOfferBtn">➕ Add Offer</button>
+                        <hr style="border-color:var(--border);margin:12px 0;">
+                        <button class="btn btn-primary btn-sm" id="saveBannersOffersBtn">💾 Save All Banners & Offers</button>
+                    </div>
+                    <div class="admin-card"><h3>🖼️ Brand Logo & Custom Strategy Banner</h3>
+                        <label>Logo Image (URL or Base64)</label><input type="text" id="logoUrlInput" placeholder="https://...">
+                        <label>Upload Logo Image</label><input type="file" id="logoFileUpload" accept="image/*">
+                        <label>Brand Name Text</label><input type="text" id="logoTextInput" placeholder="alamquant">
+                        <label>Custom Strategy Banner (URL or Base64)</label><input type="text" id="csBannerUrl" placeholder="https://...">
+                        <label>Upload CS Banner</label><input type="file" id="csBannerFileUpload" accept="image/*">
+                        <button class="btn btn-primary btn-sm" id="saveLogoBtn">Save Logo & Banner</button>
+                    </div>
+                    <div class="admin-card"><h3>📊 Export / Import Data</h3>
+                        <button class="btn btn-outline btn-sm" id="exportDataBtn">📥 Export All Data</button>
+                        <button class="btn btn-outline btn-sm" id="importDataBtn">📤 Import Data</button>
+                        <input type="file" id="importFileInput" style="display:none;" accept=".json">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODALS & OVERLAYS -->
+    <div class="modal-overlay" id="modalOverlay"><div class="modal" id="modalBody"><button class="modal-close" id="modalCloseBtn">×</button><div id="modalContent"></div></div></div>
+    <div class="lightbox-overlay" id="lightboxOverlay"><span class="lightbox-close" id="lightboxClose">×</span><img src="" alt="Enlarged Image" id="lightboxImg"></div>
+    <!-- WhatsApp Subscribe Modal -->
+    <div class="modal-overlay" id="waModalOverlay">
+        <div class="modal" style="max-width:450px;">
+            <button class="modal-close" id="waModalClose">×</button>
+            <div id="waModalContent">
+                <h3 style="text-align:center;margin-bottom:16px;">💬 Subscribe via WhatsApp</h3>
+                <p style="text-align:center;color:var(--text2);margin-bottom:16px;font-size:0.9rem;" id="waModalPlanInfo"></p>
+                <div class="form-group"><label>Full Name *</label><input type="text" id="waName" placeholder="Your full name"></div>
+                <div class="form-group"><label>Email (Gmail ID) *</label><input type="email" id="waEmail" placeholder="your@gmail.com"></div>
+                <button class="btn btn-gold btn-lg btn-block" id="waProceedBtn">💬 Proceed to WhatsApp</button>
+            </div>
+        </div>
+    </div>
+    <div class="sticky-cta" id="stickyCta">
+        <div class="info" id="stickyCtaInfo">SMC EA Pro | From ₹1,999</div>
+        <button class="btn btn-primary" id="stickyCtaBtn">🚀 Subscribe Now</button>
+    </div>
+    <div class="sticky-plans-overlay" id="stickyPlansOverlay">
+        <div class="sticky-plans-content">
+            <button class="sticky-plans-close" id="stickyPlansClose">×</button>
+            <h2 id="stickyPlansProductName"></h2>
+            <div class="plans-grid" id="stickyPlansGrid"></div>
+        </div>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>© <span id="footerYear">2026</span> alamquant – SMC EA Pro. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="mailto:smceapro@gmail.com" id="footerGmail">📧 Gmail</a>
+            <a href="#" target="_blank" rel="noopener" id="footerWa">💬 WhatsApp</a>
+            <a href="#details">📄 Details</a>
+            <a href="#plans">💰 Plans</a>
+            <a href="#custom-strategy">📝 Custom Strategy</a>
+            <a href="#disclaimer">⚠️ Disclaimer</a>
+        </div>
+        <p style="margin-top:7px;font-size:0.76rem;color:#666;">⚠️ Risk Disclaimer: Trading forex/CFDs carries substantial risk. All performance shown is based on backtesting and is not live. Past results do not guarantee future performance.</p>
+    </footer>
+
+    <script>
+        (function() {
+            const DB_NAME = 'alamquant_smc_db_v4';
+            const DB_VERSION = 1;
+            const STORE_CONFIG = 'config';
+            const STORE_IMAGES = 'images';
+            let db = null;
+
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    if (db) return resolve(db);
+                    const request = indexedDB.open(DB_NAME, DB_VERSION);
+                    request.onupgradeneeded = (e) => {
+                        const d = e.target.result;
+                        if (!d.objectStoreNames.contains(STORE_CONFIG)) d.createObjectStore(STORE_CONFIG, { keyPath: 'key' });
+                        if (!d.objectStoreNames.contains(STORE_IMAGES)) d.createObjectStore(STORE_IMAGES, { keyPath: 'key' });
+                    };
+                    request.onsuccess = (e) => { db = e.target.result; resolve(db); };
+                    request.onerror = (e) => { console.warn('IndexedDB open failed', e); reject(e); };
+                });
+            }
+            async function idbSet(storeName, key, value) {
+                try { const d = await openDB(); return new Promise((resolve, reject) => { const tx = d.transaction(storeName, 'readwrite'); const store = tx.objectStore(storeName); store.put({ key, value }); tx.oncomplete = () => resolve(true); tx.onerror = () => reject(tx.error); }); } catch (e) { return false; }
+            }
+            async function idbGet(storeName, key) {
+                try { const d = await openDB(); return new Promise((resolve, reject) => { const tx = d.transaction(storeName, 'readonly'); const store = tx.objectStore(storeName); const req = store.get(key); req.onsuccess = () => resolve(req.result ? req.result.value : null); req.onerror = () => reject(req.error); }); } catch (e) { return null; }
+            }
+            async function idbDelete(storeName, key) {
+                try { const d = await openDB(); return new Promise((resolve, reject) => { const tx = d.transaction(storeName, 'readwrite'); const store = tx.objectStore(storeName); store.delete(key); tx.oncomplete = () => resolve(true); tx.onerror = () => reject(tx.error); }); } catch (e) { return false; }
+            }
+            async function getStorageEstimate() {
+                if (navigator.storage && navigator.storage.estimate) {
+                    try { const est = await navigator.storage.estimate(); return { usage: est.usage || 0, quota: est.quota || 0 }; } catch (e) { return { usage: 0, quota: 0 }; }
+                }
+                return { usage: 0, quota: 0 };
+            }
+            async function updateStorageIndicator() {
+                const est = await getStorageEstimate();
+                const dot = document.getElementById('storageDot');
+                const label = document.getElementById('storageLabel');
+                if (!dot || !label) return;
+                if (est.quota > 0) { const pct = (est.usage / est.quota) * 100; label.textContent = pct.toFixed(0) + '% used'; dot.className = 'dot ' + (pct > 80 ? 'red' : pct > 50 ? 'yellow' : 'green'); } else { label.textContent = 'OK'; dot.className = 'dot green'; }
+            }
+
+            const DEFAULT_DATA = {
+                siteName: "alamquant",
+                logoUrl: "",
+                logoText: "alamquant",
+                contactEmail: "smceapro@gmail.com",
+                contactWhatsAppLink: "https://wa.me/919876543210",
+                bannerCarouselHeight: 380,
+                offerCarouselHeight: 380,
+                csBannerUrl: "",
+                hero: { growth: "+120%", drawdown: "11%", winRate: "78%", growthPeriod: "1 Year" },
+                showOffers: true,
+                showBanners: true,
+                showCustomStrategy: true,
+                banners: [{ id: 'b1', active: true, imageUrl: "", link: "" }],
+                offers: [{ id: 'o1', active: true, imageUrl: "", link: "#plans" }],
+                emailjs: { publicKey: "", serviceId: "", templateId: "" },
+                blobConfig: { apiUrl: "", apiToken: "" },
+                colors: { bg: "#06060f", surface: "#0d0d1d", surface2: "#15152b", text: "#edeef5", text2: "#a8a8c8", accent: "#00e676", accent2: "#00c853", gold: "#ffb300", red: "#ff5252", blue: "#448aff", border: "rgba(255,255,255,0.07)" },
+                products: [{
+                    id: "smc-ea-pro",
+                    name: "SMC EA Pro",
+                    growth: "+120%",
+                    drawdown: "11%",
+                    winRate: "78%",
+                    profitFactor: 1.9,
+                    trades: 1200,
+                    rating: 4.8,
+                    rrr: "2.0",
+                    growthPeriod: "3 Months",
+                    growthPeriods: [
+                        { period: "3 Months", growth: "+35%", active: true },
+                        { period: "6 Months", growth: "+68%", active: true },
+                        { period: "1 Year", growth: "+120%", active: true },
+                        { period: "Lifetime", growth: "+210%", active: true }
+                    ],
+                    videoUrl: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+                    videos: [],
+                    strategy: "Smart Money Concept, Multi timeframe, Liquidity + Order Block, Risk management",
+                    features: ["Fully automated trading", "MT5 compatible", "Custom settings panel", "Dashboard included", "Risk management built-in"],
+                    faq: [
+                        { q: "Is this live result?", a: "No, this is a backtest result streamed live on YouTube for full transparency." },
+                        { q: "Can results vary in live trading?", a: "Yes, live trading results may vary due to market conditions, slippage, and broker differences." },
+                        { q: "Which broker is supported?", a: "Any MT5 broker is supported. We recommend regulated brokers for safety." },
+                        { q: "Do you offer support?", a: "Yes, all paid plans include support. Lifetime plan includes free setup help." }
+                    ],
+                    images: [],
+                    plans: [
+                        { id: "demo", name: "Demo Trial", duration: "7 Days", price: 0, type: "demo", popular: false, bestValue: false, features: ["7-Day EA Access", "Basic Support", "Limited Features"] },
+                        { id: "3m", name: "3 Months", duration: "3 Months", price: 1999, type: "paid", popular: false, bestValue: false, features: ["EA Access", "Updates", "Email Support"] },
+                        { id: "6m", name: "6 Months", duration: "6 Months", price: 2999, type: "paid", popular: false, bestValue: false, features: ["EA Access", "Updates", "Priority Support"] },
+                        { id: "1y", name: "1 Year", duration: "1 Year", price: 4999, type: "paid", popular: true, bestValue: false, features: ["EA Access", "Updates", "Priority Support", "Setup Guide"] },
+                        { id: "lifetime", name: "Lifetime", duration: "Lifetime", price: 10999, type: "paid", popular: false, bestValue: true, features: ["EA Access", "Lifetime Updates", "Priority Support", "Free Setup Help", "Exclusive Community"] }
+                    ]
+                }]
+            };
+            const DEMO_TRIAL_DAYS = ['3 Days', '4 Days', '5 Days', '6 Days', '7 Days', '8 Days', '9 Days', '10 Days', '14 Days'];
+
+            function deepMerge(target, source) {
+                let result = JSON.parse(JSON.stringify(target));
+                for (let key in source) {
+                    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key]) && typeof result[key] === 'object' && !Array.isArray(result[key])) {
+                        result[key] = deepMerge(result[key], source[key]);
+                    } else { result[key] = source[key]; }
+                }
+                return result;
+            }
+            function migrateGrowthPeriods(prod) {
+                if (prod.growthPeriods && typeof prod.growthPeriods === 'object' && !Array.isArray(prod.growthPeriods)) {
+                    let arr = [];
+                    for (let period in prod.growthPeriods) { arr.push({ period, growth: prod.growthPeriods[period], active: true }); }
+                    prod.growthPeriods = arr;
+                } else if (!prod.growthPeriods || !Array.isArray(prod.growthPeriods)) { prod.growthPeriods = []; }
+                let activePeriods = prod.growthPeriods.filter(p => p.active);
+                if (activePeriods.length > 0) { let found = activePeriods.find(p => p.period === prod.growthPeriod); if (!found) prod.growthPeriod = activePeriods[0].period; } else { prod.growthPeriod = ''; }
+                let selected = prod.growthPeriods.find(p => p.period === prod.growthPeriod && p.active);
+                if (selected) prod.growth = selected.growth;
+            }
+
+            async function loadData() {
+                try {
+                    let idbConfig = await idbGet(STORE_CONFIG, 'siteData');
+                    let lsData = localStorage.getItem('smc_ea_pro_config_v10');
+                    let merged;
+                    if (idbConfig) { merged = deepMerge(DEFAULT_DATA, idbConfig); } else if (lsData) { let parsed = JSON.parse(lsData);
+                        merged = deepMerge(DEFAULT_DATA, parsed); } else { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
+                    for (let prod of (merged.products || [])) {
+                        if (prod.id) { let storedImages = await idbGet(STORE_IMAGES, 'img_' + prod.id); if (storedImages && Array.isArray(storedImages) && storedImages.length > 0) { prod.images = storedImages; } else if (!prod.images || prod.images.length === 0 || (prod.images.length === 1 && prod.images[0].startsWith('__IDB_STORED__'))) { prod.images = []; } }
+                        migrateGrowthPeriods(prod);
+                    }
+                    let bannerImgs = await idbGet(STORE_IMAGES, 'banner_images'); if (bannerImgs && Array.isArray(bannerImgs)) { (merged.banners || []).forEach((b, i) => { if (i < bannerImgs.length && bannerImgs[i]) b.imageUrl = bannerImgs[i]; }); }
+                    let offerImgs = await idbGet(STORE_IMAGES, 'offer_images'); if (offerImgs && Array.isArray(offerImgs)) { (merged.offers || []).forEach((o, i) => { if (i < offerImgs.length && offerImgs[i]) o.imageUrl = offerImgs[i]; }); }
+                    let csBannerStored = await idbGet(STORE_IMAGES, 'cs_banner'); if (csBannerStored && typeof csBannerStored === 'string') merged.csBannerUrl = csBannerStored;
+                    if (!merged.contactWhatsAppLink && merged.contactWhatsApp) { merged.contactWhatsAppLink = 'https://wa.me/' + merged.contactWhatsApp; }
+                    if (!merged.contactWhatsAppLink) merged.contactWhatsAppLink = DEFAULT_DATA.contactWhatsAppLink;
+                    return merged;
+                } catch (e) { console.error('Failed to load data:', e); }
+                return JSON.parse(JSON.stringify(DEFAULT_DATA));
+            }
+            async function saveData(d) {
+                try {
+                    let configToStore = JSON.parse(JSON.stringify(d));
+                    let imageStoreOps = [];
+                    for (let prod of (configToStore.products || [])) {
+                        if (prod.images && prod.images.length > 0 && !prod.images[0].startsWith('__IDB_STORED__')) { imageStoreOps.push(idbSet(STORE_IMAGES, 'img_' + prod.id, prod.images));
+                            prod.images = ['__IDB_STORED__' + prod.id]; } else if (!prod.images || prod.images.length === 0) { imageStoreOps.push(idbDelete(STORE_IMAGES, 'img_' + prod.id)); }
+                    }
+                    let bannerImgUrls = (configToStore.banners || []).map(b => b.imageUrl || '');
+                    imageStoreOps.push(idbSet(STORE_IMAGES, 'banner_images', bannerImgUrls));
+                    (configToStore.banners || []).forEach(b => b.imageUrl = '');
+                    let offerImgUrls = (configToStore.offers || []).map(o => o.imageUrl || '');
+                    imageStoreOps.push(idbSet(STORE_IMAGES, 'offer_images', offerImgUrls));
+                    (configToStore.offers || []).forEach(o => o.imageUrl = '');
+                    if (configToStore.csBannerUrl && configToStore.csBannerUrl.startsWith('data:')) { imageStoreOps.push(idbSet(STORE_IMAGES, 'cs_banner', configToStore.csBannerUrl));
+                        configToStore.csBannerUrl = '__IDB_STORED_CS__'; }
+
+                    await Promise.allSettled(imageStoreOps);
+                    await idbSet(STORE_CONFIG, 'siteData', configToStore);
+
+                    let lsConfig = JSON.parse(JSON.stringify(configToStore));
+                    for (let prod of (lsConfig.products || [])) { prod.images = []; }
+                    localStorage.setItem('smc_ea_pro_config_v10', JSON.stringify(lsConfig));
+                    console.log('✅ Data saved.');
+                    await updateStorageIndicator();
+                    return { success: true };
+                } catch (e) { console.error('❌ Save failed:', e); return { success: false, error: e.message }; }
+            }
+
+            function loadSubs() { try { return JSON.parse(localStorage.getItem('smc_ea_pro_subs_v10') || '[]'); } catch (e) { return []; } }
+            function saveSubs(s) { try { localStorage.setItem('smc_ea_pro_subs_v10', JSON.stringify(s)); return true; } catch (e) { return false; } }
+            let siteData = null;
+            let subscriptions = loadSubs();
+            let currentEditingProductId = null;
+            let currentDetailsId = null;
+            let activePlansProductId = null;
+            let checkoutProductId = null;
+            let checkoutPlanId = null;
+            let generatedOTP = '';
+            let otpVerified = false;
+            let bannerCarouselInterval = null;
+            let offerCarouselInterval = null;
+            let currentBannerIndex = 0;
+            let currentOfferIndex = 0;
+            let sliderImages = [];
+            let currentSliderIndex = 0;
+            const navStack = [];
+            let currentPage = 'home';
+            let waModalProductId = null;
+            let waModalPlanId = null;
+
+            function navigateTo(page, pushToStack = true) {
+                if (pushToStack && currentPage && currentPage !== page) { navStack.push({ page: currentPage, state: getNavState() }); if (navStack.length > 50) navStack.shift(); }
+                currentPage = page;
+                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+                let target = document.getElementById('page-' + page); if (target) target.classList.add('active');
+                document.querySelectorAll('.nav a[data-page]').forEach(a => a.classList.remove('active'));
+                let nl = document.querySelector('.nav a[data-page="' + page + '"]'); if (nl) nl.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (page === 'home') window.history.replaceState(null, '', '/');
+                else window.history.replaceState(null, '', '#' + page);
+                document.getElementById('mainNav').classList.remove('open');
+            }
+
+            function goBack() { if (navStack.length > 0) { let prev = navStack.pop();
+                    currentPage = prev.page;
+                    restoreNavState(prev.state);
+                    navigateTo(prev.page, false); } else { navigateTo('home', false); } }
+
+            function getNavState() { return { currentDetailsId, activePlansProductId, checkoutProductId, checkoutPlanId, currentEditingProductId }; }
+
+            function restoreNavState(state) { if (state.currentDetailsId) currentDetailsId = state.currentDetailsId; if (state.activePlansProductId)
+                    activePlansProductId = state.activePlansProductId; if (state.checkoutProductId) checkoutProductId = state.checkoutProductId; if (state
+                    .checkoutPlanId) checkoutPlanId = state.checkoutPlanId; if (state.currentEditingProductId) currentEditingProductId = state
+                    .currentEditingProductId; }
+
+            function getDefaultProduct() { return siteData.products[0] || null; }
+
+            function getProductById(id) { return siteData.products.find(p => p.id === id) || getDefaultProduct(); }
+
+            function hexToRgb(h) { let c = h.replace('#', ''); return parseInt(c.substring(0, 2), 16) + ',' + parseInt(c.substring(2, 4), 16) + ',' +
+                    parseInt(c.substring(4, 6), 16); }
+
+            function applyColors(c) {
+                let r = document.documentElement;
+                if (c.bg) r.style.setProperty('--bg', c.bg); if (c.surface) r.style.setProperty('--surface', c.surface); if (c.surface2) r.style
+                    .setProperty('--surface2', c.surface2); if (c.text) r.style.setProperty('--text', c.text); if (c.text2) r.style.setProperty(
+                    '--text2', c.text2); if (c.accent) { r.style.setProperty('--accent', c.accent);
+                    r.style.setProperty('--accent-glow', 'rgba(' + hexToRgb(c.accent) + ',0.3)'); } if (c.accent2) r.style.setProperty('--accent2',
+                    c.accent2); if (c.gold) { r.style.setProperty('--gold', c.gold);
+                    r.style.setProperty('--gold-glow', 'rgba(' + hexToRgb(c.gold) + ',0.35)'); } if (c.red) r.style.setProperty('--red', c.red); if (
+                    c.blue) r.style.setProperty('--blue', c.blue); if (c.border) r.style.setProperty('--border', c.border);
+            }
+
+            function initEmailJS() { let config = siteData.emailjs || {}; if (config.publicKey) { try { if (typeof emailjs !== 'undefined') { emailjs
+                            .init(config.publicKey); return true; } } catch (e) { console.warn('EmailJS init failed:', e); } } return false; }
+
+            function getEmailJSConfig() { return siteData.emailjs || { publicKey: '', serviceId: '', templateId: '' }; }
+            async function uploadToVercelBlob(base64Data, fileName) { let blobConfig = siteData.blobConfig || {}; if (!blobConfig.apiUrl) return null; try { let headers = { 'Content-Type': 'application/json' }; if (blobConfig.apiToken) headers['Authorization'] =
+                        'Bearer ' + blobConfig.apiToken; let response = await fetch(blobConfig.apiUrl, { method: 'POST', headers, body: JSON
+                            .stringify({ file: base64Data, fileName: fileName || 'image-' + Date.now() + '.jpg' }) }); if (response.ok) { let
+                            result = await response.json(); console.log('✅ Uploaded to Vercel Blob:', result.url); return result
+                        .url; } return null; } catch (e) { console.warn('Vercel Blob upload error:', e.message); return null; } }
+            async function storeImage(base64Data, fileName) { let blobUrl = await uploadToVercelBlob(base64Data, fileName); if (blobUrl) return blobUrl; return base64Data; }
+
+            function showToast(msg, type) { type = type || 'success'; let c = document.getElementById('toastContainer'); let t = document.createElement(
+                    'div'); t.className = 'toast ' + type; t.textContent = msg; c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style
+                    .transform = 'translateX(130%)'; t.style.transition = '0.3s'; setTimeout(() => t.remove(), 300); }, 4000); }
+
+            function compressImage(file, maxWidth = 600, quality = 0.35) { return new Promise((resolve, reject) => { const reader = new FileReader();
+                    reader.onload = (e) => { const img = new Image();
+                        img.onload = () => { const canvas = document.createElement('canvas'); let width = img.width; let height = img.height; if (
+                                width > maxWidth) { height = (height * maxWidth) / width;
+                                width = maxWidth; } canvas.width = width;
+                            canvas.height = height; const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height); const compressedDataUrl = canvas.toDataURL('image/jpeg',
+                            quality);
+                            resolve(compressedDataUrl); };
+                        img.onerror = reject;
+                        img.src = e.target.result; };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file); }); }
+            async function compressMultipleFiles(files, maxWidth = 600, quality = 0.35) { const results = []; for (let file of files) { try { const
+                            compressed = await compressImage(file, maxWidth, quality); let blobUrl = await storeImage(compressed, file.name ||
+                            'image.jpg');
+                        results.push(blobUrl); } catch (e) { console.warn('Image compression failed for', file.name, e); } } return results; }
+            async function handleCompressedUploadSingle(fileInput, targetInputId) { if (fileInput.files[0]) { try { const compressed = await
+                            compressImage(fileInput.files[0], 600, 0.35); let blobUrl = await storeImage(compressed, fileInput.files[0].name ||
+                            'image.jpg');
+                        document.getElementById(targetInputId).value = blobUrl;
+                        showToast('Image compressed & stored! Save to persist.', 'success'); } catch (e) { showToast('Compression failed: ' + e
+                            .message, 'error'); } } }
+
+            function extractYouTubeId(url) {
+                if (!url || typeof url !== 'string') return '';
+                url = url.trim(); if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+                let patterns = [/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})(?:&|$)/,
+                    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+                    /(?:https?:\/\/)?youtu\.be\/([a-zA-Z0-9_-]{11})/,
+                    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+                    /(?:https?:\/\/)?(?:m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})(?:&|$)/,
+                    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/live\/([a-zA-Z0-9_-]{11})/,
+                    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/
+                ];
+                for (let p of patterns) { let m = url.match(p); if (m) return m[1]; }
+                return url;
+            }
+
+            function renderStars(rating) { rating = Math.max(0, Math.min(5, parseFloat(rating) || 0)); let html = '<span class="stars">'; for (let i =
+                        1; i <= 5; i++) { let starValue = rating - (i - 1); if (starValue >= 1) html +=
+                        '<span class="star full">★</span>'; else if (starValue <= 0) html +=
+                        '<span class="star empty">★</span>'; else { let fillPercent = Math.round(starValue * 100);
+                    html += `<span class="star partial" style="--fill-percent:${fillPercent}%;">★</span>`; } } html += '</span>'; return html; }
+
+            function openLightbox(imgSrc) { document.getElementById('lightboxImg').src = imgSrc; document.getElementById('lightboxOverlay').classList
+                    .add('active');
+                document.body.style.overflow = 'hidden'; }
+
+            function closeLightbox() { document.getElementById('lightboxOverlay').classList.remove('active');
+                document.body.style.overflow = ''; }
+            document.getElementById('lightboxOverlay').addEventListener('click', function(e) { if (e.target === this || e.target.id ===
+                    'lightboxImg') closeLightbox(); });
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeLightbox();
+                    closeModal();
+                    closeWaModal();
+                    document.getElementById('stickyPlansOverlay').classList.remove('active'); } });
+
+            function stopCarousels() { if (bannerCarouselInterval) clearInterval(bannerCarouselInterval); if (offerCarouselInterval) clearInterval(
+                    offerCarouselInterval);
+                bannerCarouselInterval = null;
+                offerCarouselInterval = null; }
+
+            function startBannerCarousel() { stopCarousels(); let banners = (siteData.banners || []).filter(b => b.active); if (banners.length <=
+                    1 || !siteData.showBanners) return;
+                bannerCarouselInterval = setInterval(() => { currentBannerIndex = (currentBannerIndex + 1) % banners.length;
+                    updateBannerSlide(currentBannerIndex); }, 5000); }
+
+            function startOfferCarousel() { let offers = (siteData.offers || []).filter(o => o.active); if (offers.length <= 1 || !siteData
+                    .showOffers) return;
+                offerCarouselInterval = setInterval(() => { currentOfferIndex = (currentOfferIndex + 1) % offers.length;
+                    updateOfferSlide(currentOfferIndex); }, 5000); }
+
+            function updateBannerSlide(index) { let slides = document.querySelectorAll('#bannerSlides .banner-slide'); let dots = document
+                    .querySelectorAll('#bannerDots .banner-dot');
+                slides.forEach((s, i) => s.classList.toggle('active', i === index));
+                dots.forEach((d, i) => d.classList.toggle('active', i === index));
+                currentBannerIndex = index; }
+
+            function updateOfferSlide(index) { let slides = document.querySelectorAll('#offerSlides .offer-slide'); let dots = document
+                    .querySelectorAll('#offerDots .offer-dot');
+                slides.forEach((s, i) => s.classList.toggle('active', i === index));
+                dots.forEach((d, i) => d.classList.toggle('active', i === index));
+                currentOfferIndex = index; }
+
+            function applyCarouselHeights() { document.documentElement.style.setProperty('--banner-carousel-height', (siteData
+                    .bannerCarouselHeight || 380) + 'px');
+                document.documentElement.style.setProperty('--offer-carousel-height', (siteData.offerCarouselHeight || 380) + 'px'); }
+
+            function renderCarousels() {
+                let offers = (siteData.offers || []).filter(o => o.active);
+                let offerCar = document.getElementById('offerCarousel');
+                let offerSlides = document.getElementById('offerSlides');
+                let offerDots = document.getElementById('offerDots'); if (!siteData.showOffers || offers.length === 0) { offerCar.classList.remove(
+                        'active');
+                    offerCar.style.display = 'none'; } else { offerCar.style.display = 'block';
+                    offerCar.classList.add('active');
+                    offerSlides.innerHTML = '';
+                    offerDots.innerHTML = '';
+                    offers.forEach((o, i) => { let slide = document.createElement('div');
+                        slide.className = 'offer-slide' + (i === 0 ? ' active' : ''); let linkTag = o.link ?
+                            `<a href="${o.link}" target="_blank" rel="noopener" style="display:block; width:100%; height:100%;">` :
+                            '';
+                        slide.innerHTML = (o.imageUrl ? (linkTag +
+                            `<img src="${o.imageUrl}" alt="Offer" style="width:100%;height:100%;object-fit:cover;display:block;">` +
+                            (o.link ? '</a>' : '')) :
+                            '<span class="placeholder-icon" style="font-size:4rem;color:#555;">🎁</span>');
+                        offerSlides.appendChild(slide); let dot = document.createElement('span');
+                        dot.className = 'offer-dot' + (i === 0 ? ' active' : '');
+                        dot.addEventListener('click', () => updateOfferSlide(i));
+                        offerDots.appendChild(dot); });
+                    currentOfferIndex = 0; }
+                let banners = (siteData.banners || []).filter(b => b.active);
+                let bannerCar = document.getElementById('bannerCarousel');
+                let bannerSlides = document.getElementById('bannerSlides');
+                let bannerDots = document.getElementById('bannerDots'); if (!siteData.showBanners || banners.length === 0) { bannerCar.classList
+                        .remove('active');
+                    bannerCar.style.display = 'none'; } else { bannerCar.style.display = 'block';
+                    bannerCar.classList.add('active');
+                    bannerSlides.innerHTML = '';
+                    bannerDots.innerHTML = '';
+                    banners.forEach((b, i) => { let slide = document.createElement('div');
+                        slide.className = 'banner-slide' + (i === 0 ? ' active' : ''); let linkTag = b.link ?
+                            `<a href="${b.link}" target="_blank" rel="noopener" style="display:block; width:100%; height:100%;">` :
+                            '';
+                        slide.innerHTML = (b.imageUrl ? (linkTag +
+                            `<img src="${b.imageUrl}" alt="Banner" style="width:100%;height:100%;object-fit:cover;display:block;">` +
+                            (b.link ? '</a>' : '')) :
+                            '<span class="placeholder-icon" style="font-size:4rem;color:#555;">📢</span>');
+                        bannerSlides.appendChild(slide); let dot = document.createElement('span');
+                        dot.className = 'banner-dot' + (i === 0 ? ' active' : '');
+                        dot.addEventListener('click', () => updateBannerSlide(i));
+                        bannerDots.appendChild(dot); });
+                    currentBannerIndex = 0; }
+                let carouselRow = document.querySelector('.carousel-row'); if (!siteData.showOffers && !siteData.showBanners) { carouselRow.style
+                        .display = 'none'; } else { carouselRow.style.display = 'grid';
+                    carouselRow.style.gridTemplateColumns = (siteData.showOffers && siteData.showBanners) ? '1fr 1fr' : '1fr'; }
+                stopCarousels();
+                startBannerCarousel();
+                startOfferCarousel();
+            }
+
+            function updateContactLinks() { let email = siteData.contactEmail || 'smceapro@gmail.com'; let waLink = siteData.contactWhatsAppLink ||
+                    'https://wa.me/919876543210';
+                document.getElementById('gmailLink').href = 'mailto:' + email;
+                document.getElementById('waLink').href = waLink;
+                document.getElementById('customStrategyLink').href = '#custom-strategy';
+                document.getElementById('footerGmail').href = 'mailto:' + email;
+                document.getElementById('footerWa').href = waLink; }
+
+            function updateLogo() { document.getElementById('logoText').textContent = siteData.logoText || 'alamquant'; let icon = document
+                    .getElementById('logoIcon'); if (siteData.logoUrl) { icon.innerHTML =
+                    `<img src="${siteData.logoUrl}" class="logo-img" alt="Logo">`;
+                icon.style.background = 'none'; } else { icon.innerHTML = 'AQ';
+                icon.style.background = 'var(--accent)'; } document.title = (siteData.logoText || 'alamquant') +
+                ' – SMC EA Pro | Backtest Streamed Live'; }
+
+            function updateCsBanner() { let bannerImg = document.getElementById('csBannerImg'); if (siteData.csBannerUrl) { bannerImg.src = siteData
+                        .csBannerUrl;
+                    bannerImg.style.display = 'block'; } else { bannerImg.style.display = 'none'; } }
+
+            function updateStickyCta() { let prod = getProductById(activePlansProductId || siteData.products[0]?.id); let minPrice = '1,999'; if (
+                    prod && prod.plans && prod.plans.length > 1) { let paid = prod.plans.filter(p => p.type === 'paid' && p.price > 0); if (paid
+                        .length) minPrice = Math.min(...paid.map(p => p.price)).toLocaleString(); } document.getElementById('stickyCtaInfo')
+                    .textContent = (prod ? prod.name : 'SMC EA Pro') + ' | From ₹' + minPrice; }
+
+            function getActiveGrowthPeriods(product) { return (product.growthPeriods || []).filter(gp => gp.active); }
+
+            function openStickyPlans() { let prod = getProductById(activePlansProductId || siteData.products[0]?.id); if (!prod) return; document
+                    .getElementById('stickyPlansProductName').textContent = prod.name; let grid = document.getElementById('stickyPlansGrid');
+                renderPlansGrid(grid, prod.plans, prod.id, true);
+                document.getElementById('stickyPlansOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('stickyCta').style.display = 'none'; }
+
+            function closeStickyPlans() { document.getElementById('stickyPlansOverlay').classList.remove('active');
+                document.body.style.overflow = '';
+                document.getElementById('stickyCta').style.display = ''; }
+            document.getElementById('stickyCtaBtn').addEventListener('click', openStickyPlans);
+            document.getElementById('stickyPlansClose').addEventListener('click', closeStickyPlans);
+            document.getElementById('stickyPlansOverlay').addEventListener('click', function(e) { if (e.target === this) closeStickyPlans(); });
+
+            // WhatsApp Modal
+            function openWaModal(productId, planId) { waModalProductId = productId;
+                waModalPlanId = planId; let p = getProductById(productId); if (!p) return; let plan = (p.plans || []).find(x => x.id === planId); if (
+                    !plan) return;
+                document.getElementById('waModalPlanInfo').textContent = p.name + ' - ' + plan.name + ' (' + plan.duration + ') - ' + (plan
+                    .price === 0 ? 'FREE Trial' : '₹' + plan.price.toLocaleString());
+                document.getElementById('waName').value = '';
+                document.getElementById('waEmail').value = '';
+                document.getElementById('waModalOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden'; }
+
+            function closeWaModal() { document.getElementById('waModalOverlay').classList.remove('active');
+                document.body.style.overflow = ''; }
+            document.getElementById('waModalClose').addEventListener('click', closeWaModal);
+            document.getElementById('waModalOverlay').addEventListener('click', function(e) { if (e.target === this) closeWaModal(); });
+            document.getElementById('waProceedBtn').addEventListener('click', function() { let name = document.getElementById('waName').value
+                    .trim(); let email = document.getElementById('waEmail').value.trim(); if (!name || !email) { showToast(
+                        'Please fill Name and Email.', 'error'); return; } if (!email.includes('@')) { showToast(
+                        'Please enter a valid email.', 'error'); return; } let p = getProductById(waModalProductId); let plan = (p?.plans || [])
+                    .find(x => x.id === waModalPlanId); if (!p || !plan) { showToast('Product/plan not found.', 'error'); return; } let waBase =
+                    siteData.contactWhatsAppLink || 'https://wa.me/919876543210'; let waNumber = waBase.replace('https://wa.me/', '').replace(
+                        'https://api.whatsapp.com/send?phone=', '').split('?')[0]; let priceText = plan.price === 0 ? 'Free Trial' : '₹' + plan
+                    .price.toLocaleString(); let msg =
+                    `Hi, I'm ${encodeURIComponent(name)}.%0A%0AI want to subscribe to ${encodeURIComponent(p.name)} - ${encodeURIComponent(plan.name)} (${encodeURIComponent(plan.duration)}).%0APrice: ${encodeURIComponent(priceText)}%0A%0AMy Email: ${encodeURIComponent(email)}%0A%0APlease guide me further.`;
+                let waLink = 'https://wa.me/' + waNumber + '?text=' + msg;
+                subscriptions.push({ id: Date.now(), name, email, productId: p.id, productName: p.name, planId: plan.id, planName: plan.name,
+                    price: plan.price, duration: plan.duration, date: new Date().toISOString(), status: 'whatsapp_pending' });
+                saveSubs(subscriptions);
+                closeWaModal();
+                window.open(waLink, '_blank', 'noopener');
+                showToast('📩 Opening WhatsApp...', 'success'); });
+
+            // SEARCH
+            document.getElementById('productSearch').addEventListener('input', function() { let q = this.value.toLowerCase(); document
+                    .querySelectorAll('#productGridHome .product-card').forEach(card => { let name = (card.querySelector('h3')?.textContent ||
+                            '').toLowerCase();
+                        card.style.display = name.includes(q) ? '' : 'none'; }); });
+
+            // PRODUCT CARDS
+            function populateProductCards() { let grid = document.getElementById('productGridHome'); if (!grid) return;
+                grid.innerHTML = '';
+                siteData.products.forEach(p => { let stars = renderStars(p.rating); let realImages = (p.images || []).filter(img => img && !img
+                        .startsWith('__IDB_STORED__')); let firstImg = realImages.length > 0 ? realImages[0] : ''; let safeImg = firstImg
+                        .replace(/'/g, "\\'"); let vid = extractYouTubeId(p.videoUrl); let liveBadgeHtml = vid ?
+                        '<div class="card-live-badge"><span class="card-live-dot"></span> LIVE STREAMED</div>' : ''; let imgHtml = firstImg ?
+                        `<img src="${safeImg}" alt="${p.name}" loading="lazy" onclick="event.stopPropagation();openLightbox('${safeImg}');">` :
+                        `<span class="placeholder-icon">📊</span>`; let streamedTagHtml = vid ?
+                        '<span class="card-streamed-tag"><span class="mini-dot"></span> Backtest Live Streamed</span>' : ''; let ytBtnHtml = vid ?
+                        `<a href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener" class="btn-yt" title="Watch backtest on YouTube" onclick="event.stopPropagation();"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z" fill="#fff"/></svg> YouTube</a>` :
+                        ''; let card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.dataset.productId = p.id;
+                    card.innerHTML = `
+                        <div class="card-img">${imgHtml}${liveBadgeHtml}</div>
+                        <div class="card-body">
+                            <h3>${p.name}</h3>
+                            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">${stars}<span class="rating-text">${p.rating}/5</span></div>
+                            <div class="card-stats-row"><span>💹 Growth: <span class="growth-val">${p.growth}</span> <span class="period-label">(${p.growthPeriod})</span></span><span>📉 DD: <span class="dd-val">${p.drawdown}</span></span></div>
+                            ${streamedTagHtml}
+                            <div class="card-actions">
+                                <button class="btn btn-outline btn-sm details-btn">📄 Details</button>
+                                <button class="btn btn-primary btn-sm plans-btn">🚀 Plans</button>
+                                ${ytBtnHtml}
+                            </div>
+                        </div>`;
+                    card.addEventListener('click', e => { if (e.target.closest('button') || e.target.closest('a') || e.target.tagName ===
+                            'IMG') return;
+                        openModal(p.id); });
+                    card.querySelector('.details-btn').addEventListener('click', e => { e.stopPropagation();
+                        navigateTo('details');
+                        currentDetailsId = p.id;
+                        setTimeout(() => populateDetailsPage(p.id), 100); });
+                    card.querySelector('.plans-btn').addEventListener('click', e => { e.stopPropagation();
+                        activePlansProductId = p.id;
+                        navigateTo('plans');
+                        setTimeout(() => populatePlansPage(p.id), 100); });
+                    grid.appendChild(card); }); }
+
+            function populatePlansPage(productId) { let p = getProductById(productId); if (!p) { p = getDefaultProduct(); if (!p) return; }
+                activePlansProductId = p.id; let container = document.getElementById('plansGrid'); let selector = document.getElementById(
+                    'plansProductSelector'); if (!container) return;
+                selector.innerHTML = '';
+                siteData.products.forEach(pr => { let btn = document.createElement('button');
+                    btn.textContent = pr.name;
+                    btn.className = pr.id === p.id ? 'active' : '';
+                    btn.addEventListener('click', () => { activePlansProductId = pr.id;
+                        populatePlansPage(pr.id); });
+                    selector.appendChild(btn); }); if (siteData.products.length <= 1) selector.style.display = 'none'; else selector.style
+                    .display = 'flex';
+                renderPlansGrid(container, p.plans, p.id); }
+
+            function renderPlansGrid(container, plans, productId, closeOverlay = false) { container.innerHTML = ''; if (!plans || !plans.length) { container
+                        .innerHTML = '<p style="color:#888;text-align:center;">No plans available.</p>'; return; }
+                plans.forEach(plan => { let badge = ''; let extraClass = ''; if (plan.type === 'demo') { badge =
+                        '<span class="plan-badge">🆓 Free Trial</span>';
+                    extraClass = ' demo-plan'; } else if (plan.bestValue) { badge =
+                        '<span class="plan-badge">🔥 Best Value</span>';
+                    extraClass = ' best-value'; } else if (plan.popular) { badge =
+                        '<span class="plan-badge">⭐ Most Popular</span>';
+                    extraClass = ' popular'; } let priceDisplay = plan.price === 0 ?
+                        '<div class="plan-price free">FREE<span></span></div>' : '<div class="plan-price">₹' + plan.price.toLocaleString() +
+                        '<span> / ' + plan.duration + '</span></div>'; let card = document.createElement('div');
+                    card.className = 'plan-card' + extraClass;
+                    card.innerHTML = badge + '<div class="plan-name">' + plan.name + '</div>' + priceDisplay +
+                        '<div class="plan-duration">' + plan.duration + ' access</div>' + '<ul class="plan-features">' + (plan.features || [])
+                        .map(f => '<li>' + f + '</li>').join('') + '</ul>' +
+                        '<button class="btn btn-primary btn-block subscribe-plan-btn" data-product="' + productId + '" data-plan="' + plan.id +
+                        '">💬 ' + (plan.price === 0 ? 'Start Free Trial' : 'Subscribe via WhatsApp') + '</button>';
+                    card.querySelector('.subscribe-plan-btn').addEventListener('click', () => { if (closeOverlay) closeStickyPlans();
+                        openWaModal(productId, plan.id); });
+                    container.appendChild(card); }); }
+
+            function populateFAQ(containerId, faqData) { let c = document.getElementById(containerId); if (!c) return; let faqs = faqData || (
+                    getDefaultProduct()?.faq || []); if (!faqs.length) { c.innerHTML =
+                    '<p style="color:#888;text-align:center;">No FAQs available.</p>'; return; }
+                c.innerHTML = '';
+                faqs.forEach(item => { let d = document.createElement('div');
+                    d.className = 'faq-item';
+                    d.innerHTML = '<button class="faq-question">' + item.q +
+                        ' <span class="faq-toggle-icon">+</span></button><div class="faq-answer">' + item.a + '</div>';
+                    d.querySelector('.faq-question').addEventListener('click', () => { let wasOpen = d.classList.contains('open');
+                        c.querySelectorAll('.faq-item.open').forEach(f => f.classList.remove('open')); if (!wasOpen) d.classList.add(
+                            'open'); });
+                    c.appendChild(d); }); }
+
+            function openModal(id) { let p = getProductById(id); if (!p) return; let stars = renderStars(p.rating); let realImages = (p.images ||
+                        []).filter(img => img && !img.startsWith('__IDB_STORED__')); let firstImg = realImages.length > 0 ? realImages[0] :
+                    ''; let safeImg = firstImg.replace(/'/g, "\\'"); let img = firstImg ?
+                    `<img src="${safeImg}" alt="${p.name}" style="cursor:pointer;" onclick="document.getElementById('lightboxImg').src='${safeImg}';document.getElementById('lightboxOverlay').classList.add('active');document.body.style.overflow='hidden';">` :
+                    '<span class="placeholder-icon" style="font-size:4rem;">📊</span>'; let vid = extractYouTubeId(p.videoUrl); document
+                    .getElementById('modalContent').innerHTML = `
+                <div class="modal-img">${img}</div>
+                <h2>${p.name} ${stars} <span style="font-size:0.86rem;color:#aaa;">${p.rating}/5</span></h2>
+                <div class="modal-stats-grid">
+                    <div class="modal-stat"><div class="val">${p.growth}</div><div class="lbl">Growth (${p.growthPeriod||'3M'})</div></div>
+                    <div class="modal-stat"><div class="val red">${p.drawdown}</div><div class="lbl">Drawdown</div></div>
+                    <div class="modal-stat"><div class="val">${p.winRate}</div><div class="lbl">Win Rate</div></div>
+                    <div class="modal-stat"><div class="val">RRR ${p.rrr}</div><div class="lbl">Risk Reward</div></div>
+                    <div class="modal-stat"><div class="val">${p.profitFactor}</div><div class="lbl">Profit Factor</div></div>
+                    <div class="modal-stat"><div class="val">${p.trades}+</div><div class="lbl">Trades</div></div>
+                </div>
+                <div class="modal-cta-group">
+                    <button class="btn btn-primary" id="modalViewPlans">🚀 View Plans</button>
+                    <button class="btn btn-outline" id="modalDetails">📄 Full Details</button>
+                    ${vid ? '<button class="btn btn-outline" id="modalWatch">▶ Watch Backtest</button>' : ''}
+                </div>`;
+                document.getElementById('modalOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('modalViewPlans').onclick = () => { closeModal();
+                    activePlansProductId = p.id;
+                    navigateTo('plans');
+                    setTimeout(() => populatePlansPage(p.id), 100); };
+                document.getElementById('modalDetails').onclick = () => { closeModal();
+                    navigateTo('details');
+                    currentDetailsId = p.id;
+                    setTimeout(() => populateDetailsPage(p.id), 100); }; if (vid) document.getElementById('modalWatch').onclick = () => window
+                    .open('https://www.youtube.com/watch?v=' + vid, '_blank', 'noopener'); }
+
+            function closeModal() { document.getElementById('modalOverlay').classList.remove('active');
+                document.body.style.overflow = ''; }
+
+            function initSlider(images) { sliderImages = images;
+                currentSliderIndex = 0; let mainImg = document.getElementById('sliderMainImg'); let thumbs = document.getElementById(
+                    'sliderThumbs');
+                thumbs.innerHTML = ''; if (images.length === 0) return;
+                mainImg.src = images[0];
+                images.forEach((src, idx) => { let thumb = document.createElement('img');
+                    thumb.src = src;
+                    thumb.className = idx === 0 ? 'active' : '';
+                    thumb.addEventListener('click', () => { currentSliderIndex = idx;
+                        mainImg.src = src;
+                        document.querySelectorAll('#sliderThumbs img').forEach((t, i) => t.classList.toggle('active', i ===
+                            idx)); });
+                    thumbs.appendChild(thumb); });
+                document.getElementById('sliderPrev').onclick = () => { currentSliderIndex = (currentSliderIndex - 1 + images.length) % images
+                        .length;
+                    mainImg.src = images[currentSliderIndex];
+                    document.querySelectorAll('#sliderThumbs img').forEach((t, i) => t.classList.toggle('active', i ===
+                        currentSliderIndex)); };
+                document.getElementById('sliderNext').onclick = () => { currentSliderIndex = (currentSliderIndex + 1) % images.length;
+                    mainImg.src = images[currentSliderIndex];
+                    document.querySelectorAll('#sliderThumbs img').forEach((t, i) => t.classList.toggle('active', i ===
+                        currentSliderIndex)); };
+                document.getElementById('fullscreenBtn').onclick = () => openLightbox(images[currentSliderIndex]); let touchStartX = 0; let
+                    sliderMain = document.getElementById('sliderMain');
+                sliderMain.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+                sliderMain.addEventListener('touchend', e => { if (!touchStartX) return; let touchEndX = e.changedTouches[0].screenX; let diff =
+                        touchStartX - touchEndX; if (Math.abs(diff) > 50) { if (diff > 0) document.getElementById('sliderNext')
+                            .click(); else document.getElementById('sliderPrev').click(); }
+                    touchStartX = 0; });
+                mainImg.addEventListener('click', () => openLightbox(images[currentSliderIndex])); }
+
+            function populateDetailsPage(id) { let p = getProductById(id); if (!p) return;
+                currentDetailsId = p.id;
+                document.getElementById('detailsName').textContent = p.name;
+                document.getElementById('detailsRating').innerHTML = renderStars(p.rating) + ' <span style="color:var(--text2)">' + p.rating +
+                    '/5</span>'; let sel = document.getElementById('growthPeriodSelect');
+                sel.innerHTML = ''; let activePeriods = getActiveGrowthPeriods(p); if (activePeriods.length > 0) { activePeriods.forEach(gp => { let
+                        opt = document.createElement('option');
+                        opt.value = gp.period;
+                        opt.textContent = gp.period + ' (' + gp.growth + ')'; if (gp.period === p.growthPeriod) opt.selected = true;
+                        sel.appendChild(opt); });
+                    sel.onchange = function() { let selectedPeriod = this.value; let selected = p.growthPeriods.find(gp => gp.period ===
+                            selectedPeriod); if (selected) { p.growthPeriod = selected.period;
+                            p.growth = selected.growth;
+                            saveData(siteData).then(() => { refreshAllUI();
+                                populateDetailsPage(p.id); }); } }; } else { sel.innerHTML = '<option disabled>No active periods</option>'; }
+                document.getElementById('detailsStatsBig').innerHTML =
+                    `<div class="big-stat"><div class="val">${p.growth}</div><div class="lbl">Growth (${p.growthPeriod||'3M'})</div></div><div class="big-stat"><div class="val red">${p.drawdown}</div><div class="lbl">Drawdown</div></div><div class="big-stat"><div class="val">${p.winRate}</div><div class="lbl">Win Rate</div></div><div class="big-stat"><div class="val">RRR ${p.rrr}</div><div class="lbl">Risk Reward</div></div>`;
+                document.getElementById('detailsPerfStats').innerHTML =
+                    `<div class="big-stat"><div class="val">${p.growth}</div><div class="lbl">Growth</div></div><div class="big-stat"><div class="val red">${p.drawdown}</div><div class="lbl">Drawdown</div></div><div class="big-stat"><div class="val">${p.winRate}</div><div class="lbl">Win Rate</div></div><div class="big-stat"><div class="val">${p.profitFactor}</div><div class="lbl">Profit Factor</div></div><div class="big-stat"><div class="val">${p.trades}+</div><div class="lbl">Trades</div></div>`;
+                let videos = p.videos || []; let videoGridContainer = document.getElementById('videoGridContainer'); let videoGrid = document
+                    .getElementById('videoGrid'); if (videos.length > 0) { videoGridContainer.style.display = 'block';
+                    videoGrid.innerHTML = '';
+                    videos.forEach(v => { let vidId = extractYouTubeId(v.url); let thumbUrl = vidId ?
+                            `https://img.youtube.com/vi/${vidId}/hqdefault.jpg` : ''; let card = document.createElement('a');
+                        card.className = 'video-card-link';
+                        card.href = v.url;
+                        card.target = '_blank';
+                        card.rel = 'noopener';
+                        card.innerHTML = (thumbUrl ?
+                            `<img src="${thumbUrl}" alt="${v.period}">` :
+                            '<div style="height:100px;background:#222;display:flex;align-items:center;justify-content:center;">🎥</div>'
+                            ) + `<span class="video-title">${v.period}</span>`;
+                        videoGrid.appendChild(card); }); } else { videoGridContainer.style.display = 'none'; }
+                document.getElementById('strategyText').textContent = p.strategy; let fl = document.getElementById('featuresList');
+                fl.innerHTML = ''; (p.features || []).forEach(f => { let li = document.createElement('li');
+                    li.textContent = f;
+                    fl.appendChild(li); }); let imgGalBox = document.getElementById('detailsImageGalleryBox'); let realImages = (p.images || [])
+                    .filter(img => img && !img.startsWith('__IDB_STORED__')); if (realImages.length > 0) { imgGalBox.style.display = 'block';
+                    initSlider(realImages); } else { imgGalBox.style.display = 'none'; }
+                renderPlansGrid(document.getElementById('plansContainerDetails'), p.plans, p.id);
+                populateFAQ('faqContainerDetails', p.faq); }
+
+            function setupCheckout(productId, planId) { checkoutProductId = productId;
+                checkoutPlanId = planId;
+                otpVerified = false;
+                generatedOTP = ''; let p = getProductById(productId); if (!p) return; let plan = (p.plans || []).find(x => x.id === planId); if (
+                    !plan) return;
+                document.getElementById('checkoutProductName').textContent = p.name;
+                document.getElementById('checkoutPlanName').textContent = plan.name;
+                document.getElementById('checkoutDuration').textContent = plan.duration;
+                document.getElementById('checkoutTotal').textContent = plan.price === 0 ? 'FREE' : '₹' + plan.price.toLocaleString();
+                document.getElementById('subName').value = '';
+                document.getElementById('subEmail').value = '';
+                document.getElementById('otpInput').value = '';
+                document.getElementById('otpSection').classList.remove('active');
+                document.getElementById('sendOtpBtn').style.display = 'block';
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('verifyOtpBtn').disabled = false;
+                document.getElementById('otpInput').disabled = false;
+                document.getElementById('otpStatus').textContent = '';
+                document.getElementById('disclaimerCheckbox').checked = false; }
+
+            async function refreshAllUI() { populateProductCards(); let dp = getDefaultProduct();
+                populateFAQ('faqContainer', dp?.faq || []); if (currentDetailsId) populateDetailsPage(currentDetailsId);
+                updateLogo();
+                updateCsBanner();
+                updateStickyCta();
+                updateContactLinks();
+                applyCarouselHeights();
+                renderCarousels();
+                document.getElementById('customStrategySection').style.display = siteData.showCustomStrategy ? 'block' : 'none'; await
+                    updateStorageIndicator(); if (document.getElementById('page-admin').classList.contains('active')) buildAdminPanel(); if (
+                    document.getElementById('page-plans').classList.contains('active')) populatePlansPage(activePlansProductId ||
+                    getDefaultProduct()?.id); }
+
+            // OTP & SUBSCRIBE (for checkout page)
+            document.getElementById('sendOtpBtn').addEventListener('click', async () => { let email = document.getElementById('subEmail').value
+                    .trim(); if (!email.includes('@')) { showToast('Please enter a valid email address.', 'error'); return; }
+                generatedOTP = Math.floor(100000 + Math.random() * 900000).toString(); let emailjsConfig = getEmailJSConfig(); let
+                    sentViaEmail = false; if (emailjsConfig.publicKey && emailjsConfig.serviceId && emailjsConfig.templateId) { try { if (
+                            typeof emailjs !== 'undefined') { emailjs.init(emailjsConfig.publicKey); let templateParams = { to_email: email,
+                                to_name: document.getElementById('subName').value.trim() || 'User', otp_code: generatedOTP,
+                                message: 'Your OTP code is: ' + generatedOTP }; let response = await emailjs.send(emailjsConfig
+                                .serviceId, emailjsConfig.templateId, templateParams); if (response.status === 200) { sentViaEmail =
+                                    true;
+                                showToast('📩 OTP sent to ' + email + '! Check your inbox.', 'success'); } } } catch (e) { showToast(
+                            '⚠️ Email sending failed. OTP shown in console (demo mode).', 'error'); } } if (!sentViaEmail) { console.log(
+                        '🔑 OTP for ' + email + ': ' + generatedOTP);
+                    showToast('📩 OTP for ' + email + ' is: ' + generatedOTP + ' (Demo Mode)', 'success'); }
+                document.getElementById('otpSection').classList.add('active');
+                document.getElementById('sendOtpBtn').style.display = 'none';
+                document.getElementById('otpInput').value = '';
+                document.getElementById('otpInput').disabled = false;
+                document.getElementById('verifyOtpBtn').disabled = false;
+                otpVerified = false;
+                document.getElementById('submitBtn').disabled = true; });
+            document.getElementById('verifyOtpBtn').addEventListener('click', () => { if (document.getElementById('otpInput').value.trim() ===
+                    generatedOTP && generatedOTP !== '') { otpVerified = true;
+                    document.getElementById('otpStatus').textContent = '✅ OTP Verified Successfully!';
+                    document.getElementById('otpStatus').style.color = 'var(--accent)';
+                    document.getElementById('verifyOtpBtn').disabled = true;
+                    document.getElementById('otpInput').disabled = true;
+                    updateSubmitBtnState();
+                    showToast('OTP Verified!', 'success'); } else { document.getElementById('otpStatus').textContent =
+                        '❌ Invalid OTP. Please try again.';
+                    document.getElementById('otpStatus').style.color = 'var(--red)';
+                    showToast('Invalid OTP.', 'error'); } });
+            document.getElementById('disclaimerCheckbox').addEventListener('change', updateSubmitBtnState);
+
+            function updateSubmitBtnState() { document.getElementById('submitBtn').disabled = !(otpVerified && document.getElementById(
+                'disclaimerCheckbox').checked); }
+            document.getElementById('subscribeForm').addEventListener('submit', e => { e.preventDefault(); if (!otpVerified) { showToast(
+                        'Please verify OTP first.', 'error'); return; } if (!document.getElementById('disclaimerCheckbox').checked) { showToast(
+                        'Please accept the risk disclaimer.', 'error'); return; } let name = document.getElementById('subName').value.trim(),
+                    email = document.getElementById('subEmail').value.trim(); if (!name || !email) return; let p = getProductById(
+                    checkoutProductId),
+                    plan = (p?.plans || []).find(x => x.id === checkoutPlanId); if (!p || !plan) { showToast(
+                        'Product or plan not found.', 'error'); return; }
+                subscriptions.push({ id: Date.now(), name, email, productId: p.id, productName: p.name, planId: plan.id, planName: plan.name,
+                    price: plan.price, duration: plan.duration, date: new Date().toISOString(), status: 'active' });
+                saveSubs(subscriptions);
+                showToast('🎉 Thank you ' + name + '! ' + (plan.price === 0 ? 'Demo Trial' : 'Subscription to ' + plan.name) +
+                    ' activated!', 'success');
+                document.getElementById('subscribeForm').reset();
+                document.getElementById('otpSection').classList.remove('active');
+                document.getElementById('sendOtpBtn').style.display = 'block';
+                otpVerified = false;
+                generatedOTP = '';
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('disclaimerCheckbox').checked = false;
+                setTimeout(() => { navStack.length = 0;
+                    navigateTo('home'); }, 2000); });
+
+            // Custom Strategy submit
+            document.getElementById('csSubmitBtn').addEventListener('click', function() { let strategy = document.getElementById('csStrategy')
+                    .value.trim(); let name = document.getElementById('csName').value.trim(); let email = document.getElementById('csEmail')
+                    .value.trim(); let wa = document.getElementById('csWhatsApp').value.trim(); if (!strategy || !name || !wa) { showToast(
+                        'Please fill Strategy, Name, and WhatsApp.', 'error'); return; } let waBase = siteData.contactWhatsAppLink ||
+                    'https://wa.me/919876543210'; let waNumber = waBase.replace('https://wa.me/', '').replace(
+                        'https://api.whatsapp.com/send?phone=', '').split('?')[0]; let msg =
+                    `Hi, I'm ${encodeURIComponent(name)}.%0A%0AI have a custom strategy request:%0A${encodeURIComponent(strategy.substring(0, 500))}%0A%0AMy Email: ${encodeURIComponent(email || 'N/A')}%0AMy WhatsApp: ${encodeURIComponent(wa)}%0A%0APlease review and get back to me.`;
+                let waLink = 'https://wa.me/' + waNumber + '?text=' + msg;
+                window.open(waLink, '_blank', 'noopener');
+                showToast('📩 Opening WhatsApp with your strategy...', 'success'); });
+
+            // NAVIGATION
+            document.getElementById('detailsBackBtn').addEventListener('click', (e) => { e.preventDefault();
+                goBack(); });
+            document.getElementById('checkoutBackBtn').addEventListener('click', (e) => { e.preventDefault();
+                goBack(); });
+            document.getElementById('adminBackBtn').addEventListener('click', (e) => { e.preventDefault();
+                goBack(); });
+            document.getElementById('plansBackBtn').addEventListener('click', (e) => { e.preventDefault();
+                goBack(); });
+            document.getElementById('csBackBtn').addEventListener('click', (e) => { e.preventDefault();
+                goBack(); });
+
+            function initStickyCTA() { window.addEventListener('scroll', () => { let s = document.getElementById('stickyCta'); if (window
+                        .scrollY > 400 && !document.getElementById('stickyPlansOverlay').classList.contains('active')) { s.classList.add(
+                            'visible'); } else { s.classList.remove('visible'); } }); }
+            document.querySelectorAll('.nav a[data-page]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); let page = a
+                    .dataset.page;
+                navigateTo(page); if (page === 'details' && getDefaultProduct()) { currentDetailsId = getDefaultProduct().id;
+                    setTimeout(() => populateDetailsPage(getDefaultProduct().id), 100); } if (page === 'plans') { setTimeout(() =>
+                        populatePlansPage(activePlansProductId || getDefaultProduct()?.id), 100); } if (page === 'custom-strategy') {
+                    updateCsBanner(); } }));
+            document.getElementById('hamburgerBtn').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+
+            // ADMIN PANEL
+            document.querySelectorAll('.admin-tabs button').forEach(btn => { btn.addEventListener('click', function() { document
+                        .querySelectorAll('.admin-tabs button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+                    document.getElementById(this.dataset.tab).classList.add('active'); if (this.dataset.tab === 'admin-tab-subs')
+                        buildSubsTable(); if (this.dataset.tab === 'admin-tab-products') updateStorageIndicator(); }); });
+
+            function buildAdminProductSelect() { let sel = document.getElementById('adminProductSelect');
+                sel.innerHTML = '';
+                siteData.products.forEach(p => { let opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = p.name; if (p.id === currentEditingProductId) opt.selected = true;
+                    sel.appendChild(opt); });
+                sel.onchange = function() { currentEditingProductId = this.value;
+                    buildAdminForm(); }; }
+
+            function getCurrentEditingProduct() { return siteData.products.find(x => x.id === currentEditingProductId) || siteData.products[
+                0]; }
+
+            function renderPlanEditor(plans) { let container = document.getElementById('adminPlansContainer'); if (!container) return;
+                container.innerHTML = ''; if (!plans || !plans.length) { container.innerHTML =
+                        '<p style="color:#888;">No plans added yet. Click "Add Plan" below.</p>'; return; }
+                plans.forEach((plan, idx) => { let div = document.createElement('div');
+                    div.className = 'plan-editor-item';
+                    div.setAttribute('data-plan-index', idx); let featuresText = (plan.features || []).join('\n'); let durationOptions =
+                        ''; if (plan.type === 'demo') { DEMO_TRIAL_DAYS.forEach(d => { durationOptions +=
+                            `<option value="${d}" ${plan.duration===d?'selected':''}>${d}</option>`; }); } else { ['1 Month',
+                            '3 Months', '6 Months', '1 Year', 'Lifetime'
+                        ].forEach(d => { durationOptions +=
+                            `<option value="${d}" ${plan.duration===d?'selected':''}>${d}</option>`; }); }
+                    div.innerHTML = `
+                        <button class="remove-plan-btn" data-index="${idx}">✕</button>
+                        <div class="plan-editor-grid">
+                            <div><label>Plan Name</label><input type="text" class="plan-name" value="${plan.name.replace(/"/g,'&quot;')}"></div>
+                            <div><label>Duration</label><select class="plan-duration">${durationOptions}</select></div>
+                            <div><label>Price (₹)</label><input type="number" class="plan-price" value="${plan.price}" min="0"></div>
+                            <div><label>Type</label><select class="plan-type"><option value="paid" ${plan.type==='paid'?'selected':''}>Paid</option><option value="demo" ${plan.type==='demo'?'selected':''}>Demo (Free Trial)</option></select></div>
+                            <div><label><input type="checkbox" class="plan-popular" ${plan.popular?'checked':''}> Most Popular</label></div>
+                            <div><label><input type="checkbox" class="plan-bestvalue" ${plan.bestValue?'checked':''}> Best Value</label></div>
+                            <div class="full-width"><label>Features (one per line)</label><textarea class="plan-features" rows="3">${featuresText}</textarea></div>
+                        </div>`;
+                    div.querySelector('.plan-type').addEventListener('change', function() { let durSelect = div.querySelector(
+                            '.plan-duration'); let currentVal = durSelect.value;
+                        durSelect.innerHTML = ''; if (this.value === 'demo') { DEMO_TRIAL_DAYS.forEach(d => { durSelect
+                                .innerHTML +=
+                                `<option value="${d}" ${currentVal===d?'selected':''}>${d}</option>`; }); } else { ['1 Month',
+                                '3 Months', '6 Months', '1 Year', 'Lifetime'
+                            ].forEach(d => { durSelect.innerHTML +=
+                                `<option value="${d}" ${currentVal===d?'selected':''}>${d}</option>`; }); } });
+                    container.appendChild(div); });
+                container.querySelectorAll('.remove-plan-btn').forEach(btn => { btn.addEventListener('click', function() { let index =
+                            parseInt(this.dataset.index); let currentPlans = getCurrentEditingProduct().plans || [];
+                        currentPlans.splice(index, 1);
+                        renderPlanEditor(currentPlans); }); }); }
+
+            function collectPlansFromEditor() { let container = document.getElementById('adminPlansContainer'); if (!container) return []; let
+                items = container.querySelectorAll('.plan-editor-item'); let plans = [];
+                items.forEach(item => { let plan = { id: 'plan-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+                        name: item.querySelector('.plan-name')?.value || '', duration: item.querySelector('.plan-duration')
+                        ?.value || '7 Days', price: parseInt(item.querySelector('.plan-price')?.value) || 0, type: item
+                        .querySelector('.plan-type')?.value || 'paid', popular: item.querySelector('.plan-popular')?.checked ||
+                        false, bestValue: item.querySelector('.plan-bestvalue')?.checked || false, features: (item.querySelector(
+                            '.plan-features')?.value || '').split('\n').filter(f => f.trim()) };
+                    plans.push(plan); });
+                return plans; }
+
+            function renderGrowthPeriodEditor(periods) { let container = document.getElementById('adminGrowthPeriodsContainer'); if (!container)
+                    return;
+                container.innerHTML = ''; (periods || []).forEach((gp, idx) => { let div = document.createElement('div');
+                    div.className = 'plan-editor-item';
+                    div.innerHTML = `
+                        <button class="remove-plan-btn" data-index="${idx}">✕</button>
+                        <div class="plan-editor-grid">
+                            <div><label><input type="checkbox" class="gp-active" ${gp.active?'checked':''}> Active</label></div>
+                            <div><label>Period Name</label><input class="gp-period" value="${gp.period.replace(/"/g,'&quot;')}"></div>
+                            <div><label>Growth Value</label><input class="gp-growth" value="${gp.growth||''}"></div>
+                        </div>`;
+                    container.appendChild(div); });
+                container.querySelectorAll('.remove-plan-btn').forEach(btn => btn.addEventListener('click', function() { let idx = parseInt(
+                        this.dataset.index); let p = getCurrentEditingProduct();
+                    p.growthPeriods.splice(idx, 1);
+                    renderGrowthPeriodEditor(p.growthPeriods); })); }
+
+            function collectGrowthPeriodsFromEditor() { let container = document.getElementById('adminGrowthPeriodsContainer'); if (!container)
+                    return []; let items = container.querySelectorAll('.plan-editor-item'); let periods = [];
+                items.forEach(item => { periods.push({ period: item.querySelector('.gp-period')?.value || '', growth: item.querySelector(
+                            '.gp-growth')?.value || '', active: item.querySelector('.gp-active')?.checked || false }); });
+                return periods; }
+
+            function showImagePreviewWithRemove(images, targetTextareaId) { let preview = document.getElementById('imagePreview'); if (!preview)
+                    return;
+                preview.innerHTML = ''; let realImages = (images || []).filter(img => img && !img.startsWith('__IDB_STORED__'));
+                realImages.forEach((src, idx) => { if (!src.trim()) return; let wrapper = document.createElement('span');
+                    wrapper.className = 'img-thumb-wrapper'; let img = document.createElement('img');
+                    img.src = src.trim();
+                    img.addEventListener('click', () => openLightbox(src.trim())); let removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-img-btn';
+                    removeBtn.textContent = '❌';
+                    removeBtn.setAttribute('data-index', idx);
+                    removeBtn.addEventListener('click', (e) => { e.preventDefault();
+                        e.stopPropagation(); let textarea = document.getElementById(targetTextareaId); if (textarea) { let lines =
+                                textarea.value.split('\n').filter(l => l.trim()); let indexToRemove = parseInt(removeBtn
+                                .getAttribute('data-index')); if (indexToRemove >= 0 && indexToRemove < lines.length) { lines
+                                    .splice(indexToRemove, 1);
+                                textarea.value = lines.join('\n');
+                                showImagePreviewWithRemove(lines, targetTextareaId); } } });
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(removeBtn);
+                    preview.appendChild(wrapper); }); }
+
+            function renderVideoEditor(videos) { let container = document.getElementById('adminVideosContainer'); if (!container) return;
+                container.innerHTML = ''; (videos || []).forEach((v, idx) => { let div = document.createElement('div');
+                    div.className = 'plan-editor-item';
+                    div.innerHTML = `
+                        <button class="remove-plan-btn" data-index="${idx}">✕</button>
+                        <div class="plan-editor-grid">
+                            <div><label>Period Title</label><input class="video-period" value="${v.period.replace(/"/g,'&quot;')}"></div>
+                            <div><label>YouTube URL</label><input class="video-url" value="${v.url||''}"></div>
+                        </div>`;
+                    container.appendChild(div); });
+                container.querySelectorAll('.remove-plan-btn').forEach(btn => btn.addEventListener('click', function() { let idx = parseInt(
+                        this.dataset.index); let p = getCurrentEditingProduct();
+                    p.videos.splice(idx, 1);
+                    renderVideoEditor(p.videos); })); }
+
+            function collectVideosFromEditor() { let container = document.getElementById('adminVideosContainer'); if (!container) return []; let
+                items = container.querySelectorAll('.plan-editor-item'); let videos = [];
+                items.forEach(item => { let period = item.querySelector('.video-period')?.value || ''; let url = item.querySelector(
+                        '.video-url')?.value || ''; if (period.trim()) videos.push({ period: period.trim(), url }); });
+                return videos; }
+
+            function buildAdminForm() { let p = getCurrentEditingProduct(); if (!p) return;
+                currentEditingProductId = p.id; let form = document.getElementById('adminForm'); let featuresText = (p.features || []).join(
+                    '\n'); let realImages = (p.images || []).filter(img => img && !img.startsWith('__IDB_STORED__')); let imagesText =
+                    realImages.join('\n'); let activeGPs = getActiveGrowthPeriods(p); let growthPeriodOptions = activeGPs.map(gp =>
+                    `<option value="${gp.period}" ${gp.period===p.growthPeriod?'selected':''}>${gp.period}</option>`).join(''); if (!
+                    growthPeriodOptions) growthPeriodOptions = '<option disabled>No active periods</option>';
+                form.innerHTML = `
+                <h4>Edit: ${p.name}</h4>
+                <label>Product Name</label><input id="adminProdName" value="${p.name.replace(/"/g,'&quot;')}">
+                <label>Product ID (unique slug)</label><input id="adminProdId" value="${p.id}">
+                <label>Growth</label><input id="adminGrowth" value="${p.growth}">
+                <label>Default Growth Period</label><select id="adminGrowthPeriod">${growthPeriodOptions}</select>
+                <h4 style="margin:14px 0 6px;color:var(--accent);">📈 Growth Periods</h4>
+                <div id="adminGrowthPeriodsContainer"></div>
+                <button class="btn btn-outline btn-sm" id="addGrowthPeriodBtn" style="margin:6px 0;">➕ Add Growth Period</button>
+                <label>Drawdown</label><input id="adminDrawdown" value="${p.drawdown}">
+                <label>Win Rate</label><input id="adminWinRate" value="${p.winRate}">
+                <label>Profit Factor</label><input type="number" step="0.01" id="adminPF" value="${p.profitFactor}">
+                <label>Trades</label><input type="number" id="adminTrades" value="${p.trades}">
+                <label>Rating (0-5)</label><input type="number" step="0.05" min="0" max="5" id="adminRating" value="${p.rating}">
+                <label>RRR</label><input id="adminRRR" value="${p.rrr}">
+                <label>YouTube URL (fallback)</label><input id="adminVideoUrl" value="${p.videoUrl||''}">
+                <h4 style="margin:14px 0 6px;color:var(--accent);">🎥 Multi‑Video List</h4>
+                <div id="adminVideosContainer"></div>
+                <button class="btn btn-outline btn-sm" id="addVideoBtn" style="margin:6px 0;">➕ Add Video</button>
+                <label>Strategy</label><textarea id="adminStrategy" rows="3">${p.strategy}</textarea>
+                <label>Features (one per line)</label><textarea id="adminFeatures" rows="4">${featuresText}</textarea>
+                <label>Images (URLs or Base64, one per line)</label><textarea id="adminImages" rows="3">${imagesText}</textarea>
+                <label>Upload Images (auto‑compressed)</label><input type="file" id="adminImageUpload" multiple accept="image/*">
+                <div class="image-preview-thumbs" id="imagePreview"></div>
+                <hr style="border-color:var(--border);margin:16px 0;">
+                <h4>📦 Plans for this Product</h4>
+                <div id="adminPlansContainer"></div>
+                <button class="btn btn-outline btn-sm" id="addPlanBtn" style="margin:10px 0;">➕ Add Plan</button>
+                <button class="btn btn-primary btn-block" id="saveProductBtn">💾 Save Product</button>`;
+                renderGrowthPeriodEditor(p.growthPeriods || []);
+                document.getElementById('addGrowthPeriodBtn').addEventListener('click', () => { if (!p.growthPeriods) p.growthPeriods = [];
+                    p.growthPeriods.push({ period: 'New Period', growth: '+0%', active: true });
+                    renderGrowthPeriodEditor(p.growthPeriods); });
+                renderVideoEditor(p.videos || []);
+                document.getElementById('addVideoBtn').addEventListener('click', () => { if (!p.videos) p.videos = [];
+                    p.videos.push({ period: 'New Video', url: '' });
+                    renderVideoEditor(p.videos); });
+                renderPlanEditor(p.plans || []);
+                document.getElementById('addPlanBtn').addEventListener('click', () => { let currentPlans = p.plans || [];
+                    currentPlans.push({ id: 'plan-' + Date.now(), name: 'New Plan', duration: '7 Days', price: 999, type: 'paid',
+                        popular: false, bestValue: false, features: ['New Feature'] });
+                    renderPlanEditor(currentPlans); });
+                document.getElementById('saveProductBtn').onclick = async function() { p.name = document.getElementById('adminProdName')
+                        .value; let newId = document.getElementById('adminProdId').value; if (newId && newId !== p.id) { if (siteData
+                            .products.some(x => x.id === newId && x !== p)) { showToast('Product ID already exists.',
+                            'error'); return; }
+                        p.id = newId; }
+                    p.growth = document.getElementById('adminGrowth').value;
+                    p.growthPeriod = document.getElementById('adminGrowthPeriod').value;
+                    p.growthPeriods = collectGrowthPeriodsFromEditor();
+                    p.drawdown = document.getElementById('adminDrawdown').value;
+                    p.winRate = document.getElementById('adminWinRate').value;
+                    p.profitFactor = parseFloat(document.getElementById('adminPF').value) || 1.9;
+                    p.trades = parseInt(document.getElementById('adminTrades').value) || 1200;
+                    p.rating = parseFloat(document.getElementById('adminRating').value) || 4.5;
+                    p.rrr = document.getElementById('adminRRR').value;
+                    p.videoUrl = document.getElementById('adminVideoUrl').value;
+                    p.videos = collectVideosFromEditor();
+                    p.strategy = document.getElementById('adminStrategy').value;
+                    p.features = document.getElementById('adminFeatures').value.split('\n').filter(f => f.trim());
+                    p.images = document.getElementById('adminImages').value.split('\n').filter(u => u.trim());
+                    p.plans = collectPlansFromEditor(); if (p.plans.some(plan => !plan.name.trim())) { showToast(
+                            'All plans must have a name.', 'error'); return; } let activeGPs = getActiveGrowthPeriods(p); if (
+                        activeGPs.length > 0) { let found = activeGPs.find(gp => gp.period === p.growthPeriod); if (!found) p
+                            .growthPeriod = activeGPs[0].period; let sel = activeGPs.find(gp => gp.period === p.growthPeriod); if (
+                            sel) p.growth = sel.growth; } let result = await saveData(siteData); if (result.success) { refreshAllUI
+                        ();
+                        buildAdminProductSelect();
+                        buildAdminForm();
+                        showToast('✅ Product saved!', 'success'); } else { showToast('❌ Save failed: ' + result.error, 'error'); } }; let
+                    upload = document.getElementById('adminImageUpload'); if (upload) upload.addEventListener('change', async function() { if (
+                        this.files.length) { showToast('Compressing...', 'success'); const compressed = await compressMultipleFiles(this
+                        .files, 600, 0.35); if (compressed.length) { let existing = document.getElementById('adminImages').value
+                        .trim(); if (existing) existing += '\n';
+                    document.getElementById('adminImages').value = existing + compressed.join('\n');
+                    showImagePreviewWithRemove(document.getElementById('adminImages').value.split('\n').filter(u => u.trim()),
+                        'adminImages');
+                    showToast('Images processed! Save to persist.', 'success'); } else showToast('Image processing failed.',
+                        'error'); } });
+                showImagePreviewWithRemove(realImages, 'adminImages');
+                document.getElementById('adminShowOffers').checked = siteData.showOffers;
+                document.getElementById('adminShowBanners').checked = siteData.showBanners;
+                document.getElementById('adminShowCustomStrategy').checked = siteData.showCustomStrategy; }
+
+            function buildAdminBannersOffers() { let bannersContainer = document.getElementById('adminBannersContainer'); let offersContainer =
+                    document.getElementById('adminOffersContainer'); if (!bannersContainer || !offersContainer) return;
+                bannersContainer.innerHTML = ''; (siteData.banners || []).forEach((b, i) => { let div = document.createElement('div');
+                    div.className = 'plan-editor-item';
+                    div.innerHTML = `
+                        <button class="remove-plan-btn" data-index="${i}" data-type="banner">✕</button>
+                        <div class="plan-editor-grid">
+                            <div class="full-width"><label>Image URL</label><input class="banner-img" value="${b.imageUrl||''}"></div>
+                            <div><label>Link URL</label><input class="banner-link" value="${b.link||''}"></div>
+                            <div><label><input type="checkbox" class="banner-active" ${b.active?'checked':''}> Active</label></div>
+                            <div><label>Upload Image</label><input type="file" class="banner-file-upload" accept="image/*" data-index="${i}"></div>
+                        </div>`;
+                    bannersContainer.appendChild(div); });
+                offersContainer.innerHTML = ''; (siteData.offers || []).forEach((o, i) => { let div = document.createElement('div');
+                    div.className = 'plan-editor-item';
+                    div.innerHTML = `
+                        <button class="remove-plan-btn" data-index="${i}" data-type="offer">✕</button>
+                        <div class="plan-editor-grid">
+                            <div class="full-width"><label>Image URL</label><input class="offer-img" value="${o.imageUrl||''}"></div>
+                            <div><label>Link URL</label><input class="offer-link" value="${o.link||''}"></div>
+                            <div><label><input type="checkbox" class="offer-active" ${o.active?'checked':''}> Active</label></div>
+                            <div><label>Upload Image</label><input type="file" class="offer-file-upload" accept="image/*" data-index="${i}"></div>
+                        </div>`;
+                    offersContainer.appendChild(div); });
+                bannersContainer.querySelectorAll('.remove-plan-btn').forEach(btn => btn.addEventListener('click', function() { let idx =
+                        parseInt(this.dataset.index);
+                    siteData.banners.splice(idx, 1);
+                    buildAdminBannersOffers(); }));
+                offersContainer.querySelectorAll('.remove-plan-btn').forEach(btn => btn.addEventListener('click', function() { let idx =
+                        parseInt(this.dataset.index);
+                    siteData.offers.splice(idx, 1);
+                    buildAdminBannersOffers(); }));
+                bannersContainer.querySelectorAll('.banner-file-upload').forEach(inp => inp.addEventListener('change', async function() { if (
+                        this.files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let blobUrl = await
+                        storeImage(compressed, this.files[0].name || 'banner.jpg'); let idx = parseInt(this.dataset.index); if (
+                            siteData.banners[idx]) siteData.banners[idx].imageUrl = blobUrl;
+                    buildAdminBannersOffers();
+                    showToast('Banner image processed!', 'success'); } }));
+                offersContainer.querySelectorAll('.offer-file-upload').forEach(inp => inp.addEventListener('change', async function() { if (
+                        this.files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let blobUrl = await
+                        storeImage(compressed, this.files[0].name || 'offer.jpg'); let idx = parseInt(this.dataset.index); if (
+                            siteData.offers[idx]) siteData.offers[idx].imageUrl = blobUrl;
+                    buildAdminBannersOffers();
+                    showToast('Offer image processed!', 'success'); } })); }
+
+            async function collectAndSaveBannersOffers() { let bannersContainer = document.getElementById('adminBannersContainer'); let
+                offersContainer = document.getElementById('adminOffersContainer'); if (bannersContainer) { let items = bannersContainer
+                    .querySelectorAll('.plan-editor-item');
+                siteData.banners = [];
+                items.forEach(item => { siteData.banners.push({ id: 'b' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+                        imageUrl: item.querySelector('.banner-img')?.value || '', link: item.querySelector('.banner-link')
+                        ?.value || '', active: item.querySelector('.banner-active')?.checked || false }); }); } if (offersContainer) { let
+                    items = offersContainer.querySelectorAll('.plan-editor-item');
+                siteData.offers = [];
+                items.forEach(item => { siteData.offers.push({ id: 'o' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+                        imageUrl: item.querySelector('.offer-img')?.value || '', link: item.querySelector('.offer-link')
+                        ?.value || '', active: item.querySelector('.offer-active')?.checked || false }); }); } let result = await saveData(
+                    siteData); if (result.success) { refreshAllUI();
+                    showToast('✅ Banners & Offers saved!', 'success'); } else { showToast('❌ Failed to save: ' + result.error, 'error'); } }
+
+            document.getElementById('addBannerBtn')?.addEventListener('click', () => { if (!siteData.banners) siteData.banners = [];
+                siteData.banners.push({ id: 'b' + Date.now(), imageUrl: '', link: '', active: true });
+                buildAdminBannersOffers(); });
+            document.getElementById('addOfferBtn')?.addEventListener('click', () => { if (!siteData.offers) siteData.offers = [];
+                siteData.offers.push({ id: 'o' + Date.now(), imageUrl: '', link: '', active: true });
+                buildAdminBannersOffers(); });
+            document.getElementById('saveBannersOffersBtn')?.addEventListener('click', collectAndSaveBannersOffers);
+
+            function buildSubsTable() { let c = document.getElementById('subsTableContainer'); let subs = loadSubs(); if (!subs.length) { c
+                        .innerHTML = '<p style="color:#888;text-align:center;">No subscriptions yet.</p>'; return; }
+                c.innerHTML =
+                    '<table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Product</th><th>Plan</th><th>Price</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>' +
+                    subs.map(s => '<tr><td>' + s.id + '</td><td>' + s.name + '</td><td>' + s.email + '</td><td>' + (s.productName || '-') +
+                        '</td><td>' + s.planName + '</td><td>' + (s.price === 0 ? 'FREE' : '₹' + s.price) + '</td><td>' + new Date(s.date)
+                        .toLocaleDateString() + '</td><td><span class="tag tag-success">' + (s.status || 'active') +
+                        '</span></td><td><button class="btn btn-sm btn-outline delete-sub-btn" data-id="' + s.id +
+                        '" style="padding:4px 10px;font-size:0.7rem;">Delete</button></td></tr>').join('') + '</tbody></table>';
+                c.querySelectorAll('.delete-sub-btn').forEach(b => b.addEventListener('click', function() { let id = parseInt(this.dataset
+                        .id);
+                    subscriptions = subscriptions.filter(s => s.id !== id);
+                    saveSubs(subscriptions);
+                    buildSubsTable();
+                    showToast('Subscription deleted.', 'success'); })); }
+
+            function buildColorPalette() { let pal = document.getElementById('colorPalette'); let cols = siteData.colors || DEFAULT_DATA.colors; let
+                labels = { bg: 'BG', surface: 'Surface', surface2: 'Surface2', text: 'Text', text2: 'Text2', accent: 'Accent',
+                    accent2: 'Accent2', gold: 'Gold', red: 'Red', blue: 'Blue', border: 'Border' };
+                pal.innerHTML = Object.keys(labels).map(k => '<label>' + labels[k] +
+                    '<input type="color" id="color_' + k + '" value="' + (cols[k] || '#000000') +
+                    '" style="width:50px;height:36px;border:none;cursor:pointer;border-radius:5px;"></label>').join(''); }
+
+            function buildAdminPanel() { buildAdminProductSelect();
+                buildAdminForm();
+                buildAdminBannersOffers();
+                buildSubsTable();
+                buildColorPalette();
+                document.getElementById('logoUrlInput').value = siteData.logoUrl || '';
+                document.getElementById('logoTextInput').value = siteData.logoText || '';
+                document.getElementById('csBannerUrl').value = siteData.csBannerUrl || '';
+                document.getElementById('emailjsPublicKey').value = (siteData.emailjs || {}).publicKey || '';
+                document.getElementById('emailjsServiceId').value = (siteData.emailjs || {}).serviceId || '';
+                document.getElementById('emailjsTemplateId').value = (siteData.emailjs || {}).templateId || '';
+                document.getElementById('blobApiUrl').value = (siteData.blobConfig || {}).apiUrl || '';
+                document.getElementById('blobApiToken').value = (siteData.blobConfig || {}).apiToken || '';
+                document.getElementById('adminGmail').value = siteData.contactEmail || '';
+                document.getElementById('adminWhatsAppLink').value = siteData.contactWhatsAppLink || DEFAULT_DATA.contactWhatsAppLink;
+                document.getElementById('adminBannerHeight').value = siteData.bannerCarouselHeight || 380;
+                document.getElementById('adminOfferHeight').value = siteData.offerCarouselHeight || 380;
+                document.getElementById('adminShowOffers').checked = siteData.showOffers;
+                document.getElementById('adminShowBanners').checked = siteData.showBanners;
+                document.getElementById('adminShowCustomStrategy').checked = siteData.showCustomStrategy;
+                updateStorageIndicator(); }
+
+            document.getElementById('saveContactBtn').addEventListener('click', async () => { siteData.contactEmail = document.getElementById(
+                    'adminGmail').value.trim();
+                siteData.contactWhatsAppLink = document.getElementById('adminWhatsAppLink').value.trim(); await saveData(siteData);
+                updateContactLinks();
+                showToast('✅ Contact info saved!', 'success'); });
+            document.getElementById('saveCarouselSizesBtn').addEventListener('click', async () => { siteData.bannerCarouselHeight = parseInt(
+                    document.getElementById('adminBannerHeight').value) || 380;
+                siteData.offerCarouselHeight = parseInt(document.getElementById('adminOfferHeight').value) || 380; await saveData(siteData);
+                applyCarouselHeights();
+                renderCarousels();
+                showToast('✅ Carousel sizes updated!', 'success'); });
+            document.getElementById('adminNewProductBtn').addEventListener('click', async () => { let np = JSON.parse(JSON.stringify(DEFAULT_DATA
+                    .products[0]));
+                np.id = 'product-' + Date.now();
+                np.name = 'New EA Product';
+                np.plans = JSON.parse(JSON.stringify(DEFAULT_DATA.products[0].plans));
+                np.images = [];
+                np.videos = [];
+                siteData.products.push(np);
+                currentEditingProductId = np.id; await saveData(siteData);
+                refreshAllUI();
+                buildAdminPanel();
+                showToast('✅ New product added!', 'success'); });
+            document.getElementById('adminDeleteProductBtn').addEventListener('click', async () => { if (siteData.products.length <= 1) {
+                    showToast('Cannot delete the only product.', 'error'); return; } let p = siteData.products.find(x => x.id ===
+                    currentEditingProductId); if (!p) return; if (confirm('Delete "' + p.name + '"?')) { siteData.products = siteData
+                    .products.filter(x => x.id !== currentEditingProductId);
+                currentEditingProductId = siteData.products[0]?.id;
+                activePlansProductId = siteData.products[0]?.id; await idbDelete(STORE_IMAGES, 'img_' + p.id); await saveData(siteData);
+                refreshAllUI();
+                buildAdminPanel();
+                showToast('✅ Product deleted.', 'success'); } });
+            document.getElementById('applyColorsBtn').addEventListener('click', async () => { let cols = {}; ['bg', 'surface', 'surface2', 'text',
+                    'text2', 'accent', 'accent2', 'gold', 'red', 'blue', 'border'
+                ].forEach(k => { let el = document.getElementById('color_' + k); if (el) cols[k] = el.value; });
+                siteData.colors = cols; await saveData(siteData);
+                applyColors(cols);
+                showToast('Colors applied!', 'success'); });
+            document.getElementById('resetColorsBtn').addEventListener('click', async () => { siteData.colors = JSON.parse(JSON.stringify(
+                DEFAULT_DATA.colors)); await saveData(siteData);
+                applyColors(siteData.colors);
+                buildColorPalette();
+                showToast('Colors reset.', 'success'); });
+            document.getElementById('saveLogoBtn').addEventListener('click', async () => { siteData.logoUrl = document.getElementById(
+                    'logoUrlInput').value;
+                siteData.logoText = document.getElementById('logoTextInput').value;
+                siteData.csBannerUrl = document.getElementById('csBannerUrl').value; await saveData(siteData);
+                updateLogo();
+                updateCsBanner();
+                showToast('✅ Logo & Banner saved!', 'success'); });
+            document.getElementById('saveEmailjsConfigBtn').addEventListener('click', async () => { if (!siteData.emailjs) siteData.emailjs = {};
+                siteData.emailjs.publicKey = document.getElementById('emailjsPublicKey').value.trim();
+                siteData.emailjs.serviceId = document.getElementById('emailjsServiceId').value.trim();
+                siteData.emailjs.templateId = document.getElementById('emailjsTemplateId').value.trim(); await saveData(siteData);
+                initEmailJS();
+                showToast('✅ EmailJS config saved!', 'success'); });
+            document.getElementById('testEmailjsBtn').addEventListener('click', async () => { let pk = document.getElementById('emailjsPublicKey')
+                    .value.trim(); let sid = document.getElementById('emailjsServiceId').value.trim(); let tid = document.getElementById(
+                        'emailjsTemplateId').value.trim(); let testEmail = document.getElementById('testEmailInput').value.trim() ||
+                    'test@example.com'; let statusEl = document.getElementById('emailjsTestStatus'); if (!pk || !sid || !tid) { statusEl
+                        .textContent = '❌ Please fill all EmailJS fields.';
+                    statusEl.style.color = 'var(--red)'; return; }
+                statusEl.textContent = '⏳ Sending test email to ' + testEmail + '...';
+                statusEl.style.color = 'var(--gold)'; try { if (typeof emailjs !== 'undefined') { emailjs.init(pk); let response = await emailjs
+                        .send(sid, tid, { to_email: testEmail, to_name: 'Test User', otp_code: '123456',
+                            message: 'This is a test OTP: 123456' }); if (response.status === 200) { statusEl.textContent =
+                            '✅ Test email sent to ' + testEmail + '!';
+                        statusEl.style.color = 'var(--accent)'; } else { statusEl.textContent = '⚠️ Unexpected response.'; } } else {
+                        statusEl.textContent = '❌ EmailJS library not loaded.';
+                        statusEl.style.color = 'var(--red)'; } } catch (e) { statusEl.textContent = '❌ Error: ' + e.message;
+                    statusEl.style.color = 'var(--red)'; } });
+            document.getElementById('saveBlobConfigBtn').addEventListener('click', async () => { if (!siteData.blobConfig) siteData.blobConfig =
+                {};
+                siteData.blobConfig.apiUrl = document.getElementById('blobApiUrl').value.trim();
+                siteData.blobConfig.apiToken = document.getElementById('blobApiToken').value.trim(); await saveData(siteData);
+                showToast('✅ Blob config saved!', 'success'); });
+            document.getElementById('logoFileUpload')?.addEventListener('change', function() { handleCompressedUploadSingle(this,
+                'logoUrlInput'); });
+            document.getElementById('csBannerFileUpload')?.addEventListener('change', function() { handleCompressedUploadSingle(this,
+                'csBannerUrl'); });
+            document.getElementById('saveVisibilityBtn').addEventListener('click', async () => { siteData.showOffers = document.getElementById(
+                    'adminShowOffers').checked;
+                siteData.showBanners = document.getElementById('adminShowBanners').checked;
+                siteData.showCustomStrategy = document.getElementById('adminShowCustomStrategy').checked; await saveData(siteData);
+                refreshAllUI();
+                showToast('✅ Visibility settings saved!', 'success'); });
+            document.getElementById('exportDataBtn').addEventListener('click', async () => { let exp = { data: siteData, subscriptions: loadSubs(),
+                    exportDate: new Date().toISOString() }; let blob = new Blob([JSON.stringify(exp, null, 2)], { type: 'application/json' }); let
+                url = URL.createObjectURL(blob); let a = document.createElement('a');
+                a.href = url;
+                a.download = 'alamquant-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('Data exported!', 'success'); });
+            document.getElementById('importDataBtn').addEventListener('click', () => document.getElementById('importFileInput').click());
+            document.getElementById('importFileInput').addEventListener('change', async function(e) { let file = e.target.files[0]; if (!file)
+                    return; let reader = new FileReader();
+                reader.onload = async function(ev) { try { let imp = JSON.parse(ev.target.result); if (imp.data) { siteData = deepMerge(
+                            DEFAULT_DATA, imp.data); for (let prod of (siteData.products || [])) { migrateGrowthPeriods(
+                                prod); } await saveData(siteData);
+                        currentEditingProductId = siteData.products[0]?.id;
+                        activePlansProductId = siteData.products[0]?.id; } if (imp.subscriptions) { saveSubs(imp.subscriptions);
+                        subscriptions = imp.subscriptions; }
+                    applyColors(siteData.colors || DEFAULT_DATA.colors);
+                    applyCarouselHeights(); await refreshAllUI();
+                    showToast('✅ Data imported!', 'success'); } catch (ex) { showToast('Invalid import file.', 'error'); } };
+                reader.readAsText(file);
+                e.target.value = ''; });
+
+            document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+
+            function handleHash() { let h = location.hash.replace('#', ''); if (h === 'admin') { navigateTo('admin');
+                    setTimeout(buildAdminPanel, 150); } else if (h === 'details') { navigateTo('details'); if (currentDetailsId) setTimeout(
+                        () => populateDetailsPage(currentDetailsId), 100); else if (getDefaultProduct()) { currentDetailsId =
+                        getDefaultProduct().id;
+                    setTimeout(() => populateDetailsPage(getDefaultProduct().id), 100); } } else if (h === 'disclaimer') { navigateTo(
+                    'disclaimer'); } else if (h === 'checkout') { navigateTo('checkout'); if (checkoutProductId && checkoutPlanId)
+                    setTimeout(() => setupCheckout(checkoutProductId, checkoutPlanId), 100); else if (getDefaultProduct() && getDefaultProduct()
+                        .plans && getDefaultProduct().plans.length > 0) { checkoutProductId = getDefaultProduct().id;
+                    checkoutPlanId = getDefaultProduct().plans[0].id;
+                    setTimeout(() => setupCheckout(getDefaultProduct().id, getDefaultProduct().plans[0].id), 100); } } else if (h === 'plans') {
+                    navigateTo('plans');
+                    setTimeout(() => populatePlansPage(activePlansProductId || getDefaultProduct()?.id), 100); } else if (h ===
+                    'custom-strategy') { navigateTo('custom-strategy');
+                    updateCsBanner(); } else { navigateTo('home'); } }
+            window.addEventListener('hashchange', handleHash);
+
+            async function init() { siteData = await loadData();
+                applyColors(siteData.colors || DEFAULT_DATA.colors);
+                applyCarouselHeights(); if (siteData.products.length > 0) { activePlansProductId = siteData.products[0].id;
+                    currentEditingProductId = siteData.products[0].id; }
+                initEmailJS();
+                updateContactLinks();
+                renderCarousels();
+                populateProductCards(); let dp = getDefaultProduct();
+                populateFAQ('faqContainer', dp?.faq || []);
+                initStickyCTA();
+                updateLogo();
+                updateCsBanner();
+                updateStickyCta();
+                document.getElementById('footerYear').textContent = new Date().getFullYear();
+                document.getElementById('customStrategySection').style.display = siteData.showCustomStrategy ? 'block' : 'none'; await
+                    updateStorageIndicator();
+                handleHash();
+                console.log('✅ alamquant – SMC EA Pro (Production Ready) initialized.'); }
+            document.addEventListener('DOMContentLoaded', init);
+        })();
+    </script>
+</body>
+</html>
