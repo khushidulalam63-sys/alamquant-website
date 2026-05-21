@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>alamquant – SMC EA Pro | Backtest Streamed Live</title>
-    <meta name="description" content="SMC EA Pro by alamquant - Smart Money Concept Expert Advisor for MT5. 100% transparent backtesting streamed live. Premium forex EA subscription.">
+    <title>Alamquant – Backtest Streamed Live</title>
+    <meta name="description" content="Alamquant - Smart Money Concept Expert Advisor for MT5. 100% transparent backtesting streamed live. Premium forex EA subscription.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alamquant.com/">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
     <style>
         :root {
             --bg: #06060f;
@@ -41,6 +39,7 @@
             --banner-carousel-height: 380px;
             --offer-carousel-height: 380px;
             --cs-banner-height: 320px;
+            --sticky-h: 54px;
         }
         * {
             margin: 0;
@@ -61,7 +60,11 @@
             min-height: 100vh;
             overflow-x: hidden;
             padding-top: var(--header-h);
+            padding-bottom: 0;
             transition: background 0.4s, color 0.4s;
+        }
+        body.has-sticky {
+            padding-bottom: var(--sticky-h);
         }
         body::before {
             content: '';
@@ -398,6 +401,38 @@
             color: var(--accent);
             background: var(--surface2);
             transform: scale(1.1);
+        }
+        .contact-links a.gmail-link {
+            background: rgba(234, 67, 53, 0.15);
+            color: #ea4335;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 6px 10px;
+            border-radius: 18px;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .contact-links a.gmail-link:hover {
+            background: rgba(234, 67, 53, 0.3);
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .contact-links a.wa-link-header {
+            background: rgba(37, 211, 102, 0.15);
+            color: #25d366;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 6px 10px;
+            border-radius: 18px;
+            gap: 4px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+        .contact-links a.wa-link-header:hover {
+            background: rgba(37, 211, 102, 0.3);
+            color: #fff;
+            transform: scale(1.05);
         }
         .carousel-row {
             display: grid;
@@ -1197,34 +1232,76 @@
             resize: vertical;
             min-height: 110px;
         }
+
         .sticky-cta {
             position: fixed;
-            bottom: 18px;
-            right: 18px;
-            background: var(--surface);
-            border: 1px solid var(--accent);
-            border-radius: 38px;
-            padding: 7px 9px 7px 18px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 998;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 0.6px;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.55);
+            line-height: 1.3;
             display: flex;
             align-items: center;
-            gap: 10px;
-            z-index: 999;
-            box-shadow: var(--shadow-lg);
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            transition: all 0.4s;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         .sticky-cta.visible {
             opacity: 1;
             transform: translateY(0);
-            pointer-events: auto;
         }
-        .sticky-cta .info {
-            font-size: 0.78rem;
-            color: var(--text2);
-            white-space: nowrap;
+        .sticky-cta.default-style {
+            background: linear-gradient(135deg, #00e676 0%, #00c853 30%, #009624 70%, #00e676 100%);
+            background-size: 200% 200%;
+            animation: vocalBgGreen 3s ease infinite;
+            color: #000;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
         }
+        @keyframes vocalBgGreen {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        .sticky-cta.cs-style {
+            background: linear-gradient(135deg, #ffb300 0%, #ff8f00 30%, #e65100 70%, #ffb300 100%);
+            background-size: 200% 200%;
+            animation: vocalBgGold 3s ease infinite;
+            color: #000;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+        @keyframes vocalBgGold {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        .sticky-cta .sticky-emoji {
+            font-size: 1.3rem;
+        }
+        .sticky-cta .sticky-highlight {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 900;
+        }
+
         .sticky-plans-overlay {
             display: none;
             position: fixed;
@@ -1721,6 +1798,18 @@
             background: none;
             border: none;
         }
+        .otp-section-wa {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            background: var(--surface2);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        .otp-section-wa.active {
+            display: block;
+        }
+
         @media (max-width: 1024px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1765,6 +1854,7 @@
             .contact-links {
                 margin-left: 0;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             .product-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1802,6 +1892,14 @@
                 padding: 13px 26px;
                 font-size: 0.95rem;
             }
+            .sticky-cta {
+                font-size: 0.82rem;
+                padding: 10px 14px;
+                gap: 4px;
+            }
+            :root {
+                --sticky-h: 48px;
+            }
         }
         @media (max-width: 480px) {
             .product-grid {
@@ -1829,6 +1927,7 @@
                 --card-img-h: 180px;
                 --header-h: 56px;
                 --cs-banner-height: 200px;
+                --sticky-h: 44px;
             }
             .container {
                 padding: 0 12px;
@@ -1872,13 +1971,16 @@
                 height: 200px;
             }
             .sticky-cta {
-                bottom: 10px;
-                right: 10px;
-                padding: 5px 7px 5px 12px;
-                gap: 6px;
-                border-radius: 30px;
+                font-size: 0.72rem;
+                padding: 8px 10px;
+                gap: 3px;
+                letter-spacing: 0.2px;
             }
-            .sticky-cta .info {
+            .sticky-cta .sticky-emoji {
+                font-size: 1rem;
+            }
+            .sticky-cta .sticky-highlight {
+                padding: 2px 8px;
                 font-size: 0.7rem;
             }
             .card-body {
@@ -1887,6 +1989,11 @@
             .card-actions .btn {
                 font-size: 0.72rem;
                 padding: 6px 6px;
+            }
+            .contact-links a.gmail-link,
+            .contact-links a.wa-link-header {
+                font-size: 0.7rem;
+                padding: 5px 8px;
             }
         }
     </style>
@@ -1897,7 +2004,7 @@
         <div class="container header-inner">
             <a href="/" class="logo" id="brandLogo">
                 <span class="logo-icon" id="logoIcon">AQ</span>
-                <span id="logoText">alamquant</span>
+                <span id="logoText">Alamquant</span>
             </a>
             <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
             <nav class="nav" id="mainNav">
@@ -1906,8 +2013,8 @@
                 <a href="#custom-strategy" data-page="custom-strategy">Custom Strategy</a>
                 <a href="#disclaimer" data-page="disclaimer">Disclaimer</a>
                 <span class="contact-links" id="headerContactLinks">
-                    <a href="mailto:smceapro@gmail.com" title="Gmail" id="gmailLink">📧</a>
-                    <a href="#" target="_blank" rel="noopener" title="WhatsApp" id="waLink">💬</a>
+                    <a href="mailto:smceapro@gmail.com" title="Open Gmail" id="gmailLink" class="gmail-link">📧 Gmail</a>
+                    <a href="https://wa.me/919876543210" target="_blank" rel="noopener" title="WhatsApp" id="waLink" class="wa-link-header">💬 WhatsApp</a>
                 </span>
             </nav>
         </div>
@@ -2113,18 +2220,18 @@
                         <label>Custom Strategy Banner Height</label><input type="number" id="adminCsBannerHeight" value="320" min="200" max="600">
                         <button class="btn btn-primary btn-sm" id="saveCarouselSizesBtn">💾 Save Sizes</button>
                     </div>
-                    <div class="admin-card"><h3>📧 EmailJS Configuration</h3>
+                    <!-- GOOGLE APPS SCRIPT OTP CONFIGURATION (Replaces EmailJS) -->
+                    <div class="admin-card"><h3>📧 OTP Configuration (Google Apps Script)</h3>
                         <div class="emailjs-config-section">
-                            <h4>🔑 EmailJS Credentials</h4>
-                            <label>EmailJS Public Key</label><input type="text" id="emailjsPublicKey" placeholder="e.g., abc123...">
-                            <label>EmailJS Service ID</label><input type="text" id="emailjsServiceId" placeholder="e.g., service_abc123">
-                            <label>EmailJS Template ID</label><input type="text" id="emailjsTemplateId" placeholder="e.g., template_xyz789">
-                            <button class="btn btn-primary btn-sm" id="saveEmailjsConfigBtn">💾 Save EmailJS Config</button>
+                            <h4>🔗 Google Apps Script Web App URL</h4>
+                            <label>Apps Script URL (for OTP send/verify)</label>
+                            <input type="text" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/.../exec">
+                            <button class="btn btn-primary btn-sm" id="saveAppsScriptUrlBtn">💾 Save URL</button>
                             <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">
                                 <input type="email" id="testEmailInput" placeholder="your@email.com" style="flex:1;min-width:140px;">
-                                <button class="btn btn-outline btn-sm" id="testEmailjsBtn">🧪 Test Email</button>
+                                <button class="btn btn-outline btn-sm" id="testAppsScriptBtn">🧪 Test OTP Send</button>
                             </div>
-                            <p id="emailjsTestStatus" style="font-size:0.78rem;margin-top:8px;color:var(--text2);"></p>
+                            <p id="appsScriptTestStatus" style="font-size:0.78rem;margin-top:8px;color:var(--text2);"></p>
                         </div>
                     </div>
                     <div class="admin-card"><h3>☁️ API Storage Configuration</h3>
@@ -2167,7 +2274,7 @@
                     <div class="admin-card"><h3>🖼️ Brand Logo</h3>
                         <label>Logo Image (URL or Base64)</label><input type="text" id="logoUrlInput" placeholder="https://...">
                         <label>Upload Logo Image</label><input type="file" id="logoFileUpload" accept="image/*">
-                        <label>Brand Name Text</label><input type="text" id="logoTextInput" placeholder="alamquant">
+                        <label>Brand Name Text</label><input type="text" id="logoTextInput" placeholder="Alamquant">
                         <button class="btn btn-primary btn-sm" id="saveLogoBtn">Save Logo</button>
                     </div>
                     <div class="admin-card"><h3>📊 Export / Import Data</h3>
@@ -2184,21 +2291,30 @@
     <div class="modal-overlay" id="modalOverlay"><div class="modal" id="modalBody"><button class="modal-close" id="modalCloseBtn">×</button><div id="modalContent"></div></div></div>
     <div class="lightbox-overlay" id="lightboxOverlay"><span class="lightbox-close" id="lightboxClose">×</span><img src="" alt="Enlarged Image" id="lightboxImg"></div>
     <div class="modal-overlay" id="waModalOverlay">
-        <div class="modal" style="max-width:420px;">
+        <div class="modal" style="max-width:460px;">
             <button class="modal-close" id="waModalClose">×</button>
             <div id="waModalContent">
                 <h3 style="text-align:center;margin-bottom:14px;">💬 Subscribe via WhatsApp</h3>
                 <p style="text-align:center;color:var(--text2);margin-bottom:14px;font-size:0.86rem;" id="waModalPlanInfo"></p>
                 <div class="form-group"><label>Full Name *</label><input type="text" id="waName" placeholder="Your full name"></div>
                 <div class="form-group"><label>Email (Gmail ID) *</label><input type="email" id="waEmail" placeholder="your@gmail.com"></div>
-                <button class="btn btn-gold btn-lg btn-block" id="waProceedBtn">💬 Proceed to WhatsApp</button>
+                <button type="button" class="btn btn-outline btn-block" id="waSendOtpBtn">📩 Send OTP to Gmail</button>
+                <div class="otp-section-wa" id="waOtpSection">
+                    <div class="form-group"><label>Enter OTP *</label><input type="text" id="waOtpInput" maxlength="6" placeholder="6-digit code"></div>
+                    <button type="button" class="btn btn-primary btn-block" id="waVerifyOtpBtn">✅ Verify OTP</button>
+                    <p id="waOtpStatus" style="text-align:center;margin-top:8px;font-size:0.82rem;color:var(--text2);"></p>
+                </div>
+                <button class="btn btn-gold btn-lg btn-block" id="waProceedBtn" style="display:none;">💬 Proceed to WhatsApp</button>
+                <p style="text-align:center;font-size:0.72rem;color:var(--text2);margin-top:8px;">🔒 Your Gmail will be verified via OTP. Subscription details will also be sent to our team.</p>
             </div>
         </div>
     </div>
-    <div class="sticky-cta" id="stickyCta">
-        <div class="info" id="stickyCtaInfo">SMC EA Pro | From ₹1,999</div>
-        <button class="btn btn-primary" id="stickyCtaBtn">🚀 Subscribe Now</button>
+
+    <!-- FULL-WIDTH STICKY BANNER -->
+    <div class="sticky-cta default-style" id="stickyCta">
+        <span class="sticky-emoji">🚀</span> Trial Demo & Subscription Now <span class="sticky-highlight">Grab Your EA</span> <span class="sticky-emoji">⚡</span>
     </div>
+
     <div class="sticky-plans-overlay" id="stickyPlansOverlay">
         <div class="sticky-plans-content">
             <button class="sticky-plans-close" id="stickyPlansClose">×</button>
@@ -2219,10 +2335,10 @@
 
     <!-- FOOTER -->
     <footer class="site-footer">
-        <p>© <span id="footerYear">2026</span> alamquant – SMC EA Pro. All rights reserved.</p>
+        <p>© <span id="footerYear">2026</span> Alamquant. All rights reserved.</p>
         <div class="footer-links">
             <a href="mailto:smceapro@gmail.com" id="footerGmail">📧 Gmail</a>
-            <a href="#" target="_blank" rel="noopener" id="footerWa">💬 WhatsApp</a>
+            <a href="https://wa.me/919876543210" target="_blank" rel="noopener" id="footerWa">💬 WhatsApp</a>
             <a href="#details">📄 Details</a>
             <a href="#plans">💰 Plans</a>
             <a href="#custom-strategy">📝 Custom Strategy</a>
@@ -2233,7 +2349,7 @@
 
     <script>
         (function() {
-            const DB_NAME = 'alamquant_smc_db_v5';
+            const DB_NAME = 'alamquant_smc_db_v7';
             const DB_VERSION = 1;
             const STORE_CONFIG = 'config';
             const STORE_IMAGES = 'images';
@@ -2264,8 +2380,7 @@
                         tx.oncomplete = () => resolve(true);
                         tx.onerror = () => reject(tx.error); }); } catch (e) { return false; } }
             async function idbGet(storeName, key) { try { const d = await openDB(); return new Promise((resolve, reject) => { const tx = d
-                            .transaction(storeName, 'readonly'); const store = tx.objectStore(storeName); const req = store.get(
-                        key);
+                            .transaction(storeName, 'readonly'); const store = tx.objectStore(storeName); const req = store.get(key);
                         req.onsuccess = () => resolve(req.result ? req.result.value : null);
                         req.onerror = () => reject(req.error); }); } catch (e) { return null; } }
             async function idbDelete(storeName, key) { try { const d = await openDB(); return new Promise((resolve, reject) => { const tx = d
@@ -2284,9 +2399,9 @@
                     dot.className = 'dot green'; } }
 
             const DEFAULT_DATA = {
-                siteName: "alamquant",
+                siteName: "Alamquant",
                 logoUrl: "",
-                logoText: "alamquant",
+                logoText: "Alamquant",
                 contactEmail: "smceapro@gmail.com",
                 contactWhatsAppLink: "https://wa.me/919876543210",
                 bannerCarouselHeight: 380,
@@ -2298,8 +2413,7 @@
                 showCustomStrategy: true,
                 banners: [{ id: 'b1', active: true, imageUrl: "", link: "" }],
                 offers: [{ id: 'o1', active: true, imageUrl: "", link: "#plans" }],
-                emailjs: { publicKey: "", serviceId: "", templateId: "" },
-                apiConfig: { neonApiUrl: "", blobApiUrl: "", apiToken: "", useApiStorage: false },
+                apiConfig: { neonApiUrl: "", blobApiUrl: "", apiToken: "", useApiStorage: false, appsScriptUrl: "" },
                 adminPasswordHash: hashPassword(DEFAULT_ADMIN_PASSWORD),
                 colors: { bg: "#06060f", surface: "#0d0d1d", surface2: "#15152b", text: "#edeef5", text2: "#a8a8c8", accent: "#00e676",
                     accent2: "#00c853", gold: "#ffb300", red: "#ff5252", blue: "#448aff", border: "rgba(255,255,255,0.07)" },
@@ -2367,7 +2481,7 @@
                         } catch (e) { console.warn('API load failed, falling back to local:', e.message); }
                     }
                     let idbConfig = await idbGet(STORE_CONFIG, 'siteData');
-                    let lsData = localStorage.getItem('smc_ea_pro_config_v11');
+                    let lsData = localStorage.getItem('smc_ea_pro_config_v13');
                     let merged;
                     if (idbConfig) { merged = deepMerge(DEFAULT_DATA, idbConfig); } else if (lsData) { let parsed = JSON.parse(lsData);
                         merged = deepMerge(DEFAULT_DATA, parsed); } else { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
@@ -2377,8 +2491,7 @@
                                     '__IDB_STORED__'))) { prod.images = []; } }
                         migrateGrowthPeriods(prod); }
                     let bannerImgs = await idbGet(STORE_IMAGES, 'banner_images'); if (bannerImgs && Array.isArray(bannerImgs)) { (merged
-                            .banners || []).forEach((b, i) => { if (i < bannerImgs.length && bannerImgs[i]) b.imageUrl = bannerImgs[
-                            i]; }); }
+                            .banners || []).forEach((b, i) => { if (i < bannerImgs.length && bannerImgs[i]) b.imageUrl = bannerImgs[i]; }); }
                     let offerImgs = await idbGet(STORE_IMAGES, 'offer_images'); if (offerImgs && Array.isArray(offerImgs)) { (merged.offers ||
                             []).forEach((o, i) => { if (i < offerImgs.length && offerImgs[i]) o.imageUrl = offerImgs[i]; }); }
                     let csBannerImgs = await idbGet(STORE_IMAGES, 'cs_banner_images'); if (csBannerImgs && Array.isArray(csBannerImgs)) { (merged
@@ -2388,7 +2501,8 @@
                         .contactWhatsApp; } if (!merged.contactWhatsAppLink) merged.contactWhatsAppLink = DEFAULT_DATA.contactWhatsAppLink; if (
                         !merged.adminPasswordHash) merged.adminPasswordHash = hashPassword(DEFAULT_ADMIN_PASSWORD); if (!merged.apiConfig)
                         merged.apiConfig = DEFAULT_DATA.apiConfig; if (!merged.csBanners) merged.csBanners = DEFAULT_DATA.csBanners; if (!merged
-                        .csBannerHeight) merged.csBannerHeight = DEFAULT_DATA.csBannerHeight;
+                        .csBannerHeight) merged.csBannerHeight = DEFAULT_DATA.csBannerHeight; if (!merged.apiConfig.appsScriptUrl) merged.apiConfig
+                        .appsScriptUrl = '';
                     return merged;
                 } catch (e) { console.error('Failed to load data:', e); }
                 return JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -2417,7 +2531,7 @@
                     let lsConfig = JSON.parse(JSON.stringify(configToStore));
                     for (let prod of (lsConfig.products || [])) { prod.images = []; }
                     lsConfig.csBanners = (lsConfig.csBanners || []).map(cb => ({ ...cb, imageUrl: '' }));
-                    localStorage.setItem('smc_ea_pro_config_v11', JSON.stringify(lsConfig));
+                    localStorage.setItem('smc_ea_pro_config_v13', JSON.stringify(lsConfig));
                     if (apiCfg.useApiStorage && apiCfg.neonApiUrl) {
                         try {
                             const apiPayload = JSON.parse(JSON.stringify(d));
@@ -2445,9 +2559,9 @@
                 } catch (e) { console.error('❌ Save failed:', e); return { success: false, error: e.message }; }
             }
 
-            function loadSubs() { try { return JSON.parse(localStorage.getItem('smc_ea_pro_subs_v11') || '[]'); } catch (e) { return []; } }
+            function loadSubs() { try { return JSON.parse(localStorage.getItem('smc_ea_pro_subs_v13') || '[]'); } catch (e) { return []; } }
 
-            function saveSubs(s) { try { localStorage.setItem('smc_ea_pro_subs_v11', JSON.stringify(s)); return true; } catch (e) { return false; } }
+            function saveSubs(s) { try { localStorage.setItem('smc_ea_pro_subs_v13', JSON.stringify(s)); return true; } catch (e) { return false; } }
             let siteData = null;
             let subscriptions = loadSubs();
             let currentEditingProductId = null;
@@ -2455,8 +2569,8 @@
             let activePlansProductId = null;
             let checkoutProductId = null;
             let checkoutPlanId = null;
-            let generatedOTP = '';
             let otpVerified = false;
+            let waOtpVerified = false;
             let bannerCarouselInterval = null;
             let offerCarouselInterval = null;
             let csBannerCarouselInterval = null;
@@ -2471,6 +2585,26 @@
             let waModalPlanId = null;
             let adminLockedUntil = 0;
 
+            // GOOGLE APPS SCRIPT OTP HELPERS
+            function getAppsScriptUrl() { return (siteData.apiConfig && siteData.apiConfig.appsScriptUrl) || ''; }
+
+            async function sendOTPViaAppsScript(email) {
+                const url = getAppsScriptUrl();
+                if (!url) throw new Error('Apps Script URL not configured in admin panel.');
+                const res = await fetch(url + '?action=sendOTP&email=' + encodeURIComponent(email) + '&ip=web');
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message || 'OTP send failed.');
+                return data;
+            }
+            async function verifyOTPViaAppsScript(email, otp) {
+                const url = getAppsScriptUrl();
+                if (!url) throw new Error('Apps Script URL not configured in admin panel.');
+                const res = await fetch(url + '?action=verifyOTP&email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message || 'OTP verification failed.');
+                return data;
+            }
+
             function navigateTo(page, pushToStack = true) { if (page === 'admin' && !adminLoggedIn) { showLoginOverlay(); return; } if (
                     pushToStack && currentPage && currentPage !== page) { navStack.push({ page: currentPage, state: getNavState() }); if (
                         navStack.length > 50) navStack.shift(); }
@@ -2481,7 +2615,8 @@
                     '.nav a[data-page="' + page + '"]'); if (nl) nl.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' }); if (page === 'home') window.history.replaceState(null, '', '/'); else window
                     .history.replaceState(null, '', '#' + page);
-                document.getElementById('mainNav').classList.remove('open'); }
+                document.getElementById('mainNav').classList.remove('open');
+                updateStickyCtaForPage(page); }
 
             function goBack() { if (navStack.length > 0) { let prev = navStack.pop();
                     currentPage = prev.page;
@@ -2512,18 +2647,6 @@
                     r.style.setProperty('--gold-glow', 'rgba(' + hexToRgb(c.gold) + ',0.35)'); } if (c.red) r.style.setProperty('--red', c
                     .red); if (c.blue) r.style.setProperty('--blue', c.blue); if (c.border) r.style.setProperty('--border', c.border); }
 
-            function initEmailJS() { let config = siteData.emailjs || {}; if (config.publicKey) { try { if (typeof emailjs !== 'undefined') { emailjs
-                            .init(config.publicKey); return true; } } catch (e) { console.warn('EmailJS init failed:', e); } } return false; }
-
-            function getEmailJSConfig() { return siteData.emailjs || { publicKey: '', serviceId: '', templateId: '' }; }
-            async function uploadToBlobApi(base64Data, fileName) { let apiConfig = siteData.apiConfig || {}; if (!apiConfig.blobApiUrl) return null; try { let
-                headers = { 'Content-Type': 'application/json' }; if (apiConfig.apiToken) headers['Authorization'] = 'Bearer ' + apiConfig
-                    .apiToken; let response = await fetch(apiConfig.blobApiUrl, { method: 'POST', headers, body: JSON.stringify({ file: base64Data,
-                        fileName: fileName || 'image-' + Date.now() + '.jpg' }) }); if (response.ok) { let result = await response.json();
-                    console.log('✅ Uploaded to Blob API:', result.url); return result.url; } return null; } catch (e) { console.warn(
-                        'Blob API upload error:', e.message); return null; } }
-            async function storeImage(base64Data, fileName) { let blobUrl = await uploadToBlobApi(base64Data, fileName); if (blobUrl) return blobUrl; return base64Data; }
-
             function showToast(msg, type) { type = type || 'success'; let c = document.getElementById('toastContainer'); let t = document.createElement(
                 'div');
                 t.className = 'toast ' + type;
@@ -2548,14 +2671,12 @@
                     reader.onerror = reject;
                     reader.readAsDataURL(file); }); }
             async function compressMultipleFiles(files, maxWidth = 600, quality = 0.35) { const results = []; for (let file of files) { try { const
-                            compressed = await compressImage(file, maxWidth, quality); let blobUrl = await storeImage(compressed, file.name ||
-                            'image.jpg');
-                        results.push(blobUrl); } catch (e) { console.warn('Image compression failed for', file.name, e); } } return results; }
+                            compressed = await compressImage(file, maxWidth, quality);
+                        results.push(compressed); } catch (e) { console.warn('Image compression failed for', file.name, e); } } return results; }
             async function handleCompressedUploadSingle(fileInput, targetInputId) { if (fileInput.files[0]) { try { const compressed = await
-                            compressImage(fileInput.files[0], 600, 0.35); let blobUrl = await storeImage(compressed, fileInput.files[0].name ||
-                            'image.jpg');
-                        document.getElementById(targetInputId).value = blobUrl;
-                        showToast('Image compressed & stored! Save to persist.', 'success'); } catch (e) { showToast('Compression failed: ' + e
+                            compressImage(fileInput.files[0], 600, 0.35);
+                        document.getElementById(targetInputId).value = compressed;
+                        showToast('Image compressed! Save to persist.', 'success'); } catch (e) { showToast('Compression failed: ' + e
                             .message, 'error'); } } }
 
             function extractYouTubeId(url) { if (!url || typeof url !== 'string') return '';
@@ -2705,41 +2826,41 @@
                 document.getElementById('footerGmail').href = 'mailto:' + email;
                 document.getElementById('footerWa').href = waLink; }
 
-            function updateLogo() { document.getElementById('logoText').textContent = siteData.logoText || 'alamquant'; let icon = document
+            function updateLogo() { document.getElementById('logoText').textContent = siteData.logoText || 'Alamquant'; let icon = document
                     .getElementById('logoIcon'); if (siteData.logoUrl) { icon.innerHTML =
                     `<img src="${siteData.logoUrl}" class="logo-img" alt="Logo">`;
                 icon.style.background = 'none'; } else { icon.innerHTML = 'AQ';
-                icon.style.background = 'var(--accent)'; } document.title = (siteData.logoText || 'alamquant') +
-                ' – SMC EA Pro | Backtest Streamed Live'; }
+                icon.style.background = 'var(--accent)'; } document.title = (siteData.logoText || 'Alamquant') +
+                ' – Backtest Streamed Live'; }
 
-            function updateStickyCta() { let prod = getProductById(activePlansProductId || siteData.products[0]?.id); let minPrice = '1,999'; if (
-                    prod && prod.plans && prod.plans.length > 1) { let paid = prod.plans.filter(p => p.type === 'paid' && p.price > 0); if (paid
-                        .length) minPrice = Math.min(...paid.map(p => p.price)).toLocaleString(); } document.getElementById('stickyCtaInfo')
-                    .textContent = (prod ? prod.name : 'SMC EA Pro') + ' | From ₹' + minPrice; }
+            function updateStickyCtaForPage(page) { let cta = document.getElementById('stickyCta'); if (!cta) return; if (page === 'custom-strategy') {
+                    cta.className = 'sticky-cta cs-style';
+                    cta.innerHTML =
+                        '<span class="sticky-emoji">💡</span> Your Strategy, Our Codes <span class="sticky-highlight">Get Your Custom EA</span> <span class="sticky-emoji">⚙️</span>'; } else
+                if (page === 'admin' || page === 'checkout' || page === 'disclaimer') { cta.classList.remove('visible');
+                    document.body.classList.remove('has-sticky'); return; } else { cta.className = 'sticky-cta default-style';
+                    cta.innerHTML =
+                        '<span class="sticky-emoji">🚀</span> Trial Demo & Subscription Now <span class="sticky-highlight">Grab Your EA</span> <span class="sticky-emoji">⚡</span>'; }
+                document.body.classList.add('has-sticky');
+                cta.classList.add('visible'); }
+
+            function updateStickyCta() { updateStickyCtaForPage(currentPage); }
 
             function getActiveGrowthPeriods(product) { return (product.growthPeriods || []).filter(gp => gp.active); }
 
-            function openStickyPlans() { let prod = getProductById(activePlansProductId || siteData.products[0]?.id); if (!prod) return; document
-                    .getElementById('stickyPlansProductName').textContent = prod.name; let grid = document.getElementById('stickyPlansGrid');
-                renderPlansGrid(grid, prod.plans, prod.id, true);
-                document.getElementById('stickyPlansOverlay').classList.add('active');
-                document.body.style.overflow = 'hidden';
-                document.getElementById('stickyCta').style.display = 'none'; }
-
-            function closeStickyPlans() { document.getElementById('stickyPlansOverlay').classList.remove('active');
-                document.body.style.overflow = '';
-                document.getElementById('stickyCta').style.display = ''; }
-            document.getElementById('stickyCtaBtn').addEventListener('click', openStickyPlans);
-            document.getElementById('stickyPlansClose').addEventListener('click', closeStickyPlans);
-            document.getElementById('stickyPlansOverlay').addEventListener('click', function(e) { if (e.target === this) closeStickyPlans(); });
-
             function openWaModal(productId, planId) { waModalProductId = productId;
-                waModalPlanId = planId; let p = getProductById(productId); if (!p) return; let plan = (p.plans || []).find(x => x.id === planId); if (
+                waModalPlanId = planId;
+                waOtpVerified = false; let p = getProductById(productId); if (!p) return; let plan = (p.plans || []).find(x => x.id === planId); if (
                     !plan) return;
                 document.getElementById('waModalPlanInfo').textContent = p.name + ' - ' + plan.name + ' (' + plan.duration + ') - ' + (plan
                     .price === 0 ? 'FREE Trial' : '₹' + plan.price.toLocaleString());
                 document.getElementById('waName').value = '';
                 document.getElementById('waEmail').value = '';
+                document.getElementById('waOtpInput').value = '';
+                document.getElementById('waOtpSection').classList.remove('active');
+                document.getElementById('waProceedBtn').style.display = 'none';
+                document.getElementById('waSendOtpBtn').style.display = 'block';
+                document.getElementById('waOtpStatus').textContent = '';
                 document.getElementById('waModalOverlay').classList.add('active');
                 document.body.style.overflow = 'hidden'; }
 
@@ -2747,22 +2868,77 @@
                 document.body.style.overflow = ''; }
             document.getElementById('waModalClose').addEventListener('click', closeWaModal);
             document.getElementById('waModalOverlay').addEventListener('click', function(e) { if (e.target === this) closeWaModal(); });
-            document.getElementById('waProceedBtn').addEventListener('click', function() { let name = document.getElementById('waName').value
-                    .trim(); let email = document.getElementById('waEmail').value.trim(); if (!name || !email) { showToast(
-                        'Please fill Name and Email.', 'error'); return; } if (!email.includes('@')) { showToast('Please enter a valid email.',
-                        'error'); return; } let p = getProductById(waModalProductId); let plan = (p?.plans || []).find(x => x.id ===
-                    waModalPlanId); if (!p || !plan) { showToast('Product/plan not found.', 'error'); return; } let waBase = siteData
-                    .contactWhatsAppLink || 'https://wa.me/919876543210'; let waNumber = waBase.replace('https://wa.me/', '').replace(
-                        'https://api.whatsapp.com/send?phone=', '').split('?')[0]; let priceText = plan.price === 0 ? 'Free Trial' : '₹' + plan
-                    .price.toLocaleString(); let msg =
-                    `Hi, I'm ${encodeURIComponent(name)}.%0A%0AI want to subscribe to ${encodeURIComponent(p.name)} - ${encodeURIComponent(plan.name)} (${encodeURIComponent(plan.duration)}).%0APrice: ${encodeURIComponent(priceText)}%0A%0AMy Email: ${encodeURIComponent(email)}%0A%0APlease guide me further.`;
-                let waLink = 'https://wa.me/' + waNumber + '?text=' + msg;
-                subscriptions.push({ id: Date.now(), name, email, productId: p.id, productName: p.name, planId: plan.id, planName: plan.name,
-                    price: plan.price, duration: plan.duration, date: new Date().toISOString(), status: 'whatsapp_pending' });
+
+            // WA OTP send via Apps Script
+            document.getElementById('waSendOtpBtn').addEventListener('click', async () => {
+                const email = document.getElementById('waEmail').value.trim();
+                if (!email.includes('@')) { showToast('Please enter a valid Gmail address.', 'error'); return; }
+                try {
+                    await sendOTPViaAppsScript(email);
+                    showToast('📩 OTP sent to ' + email + '! Check your Gmail inbox.', 'success');
+                    document.getElementById('waOtpSection').classList.add('active');
+                    document.getElementById('waSendOtpBtn').style.display = 'none';
+                    document.getElementById('waOtpInput').value = '';
+                    document.getElementById('waOtpStatus').textContent = '';
+                    waOtpVerified = false;
+                    document.getElementById('waProceedBtn').style.display = 'none';
+                } catch (e) { showToast('⚠️ ' + e.message, 'error'); }
+            });
+
+            // WA OTP verify via Apps Script
+            document.getElementById('waVerifyOtpBtn').addEventListener('click', async () => {
+                const email = document.getElementById('waEmail').value.trim();
+                const otp = document.getElementById('waOtpInput').value.trim();
+                try {
+                    await verifyOTPViaAppsScript(email, otp);
+                    waOtpVerified = true;
+                    document.getElementById('waOtpStatus').textContent = '✅ Gmail Verified Successfully!';
+                    document.getElementById('waOtpStatus').style.color = 'var(--accent)';
+                    document.getElementById('waProceedBtn').style.display = 'block';
+                    document.getElementById('waVerifyOtpBtn').disabled = true;
+                    document.getElementById('waOtpInput').disabled = true;
+                    showToast('Gmail OTP Verified!', 'success');
+                } catch (e) {
+                    document.getElementById('waOtpStatus').textContent = '❌ ' + e.message;
+                    document.getElementById('waOtpStatus').style.color = 'var(--red)';
+                    showToast('Invalid OTP.', 'error');
+                }
+            });
+
+            async function sendSubscriptionToAdminGmail(subData) {
+                const appsScriptUrl = getAppsScriptUrl();
+                if (!appsScriptUrl) return;
+                try {
+                    await fetch(appsScriptUrl + '?action=sendOTP&email=' + encodeURIComponent(siteData.contactEmail || 'smceapro@gmail.com') +
+                        '&ip=admin-notify&subData=' + encodeURIComponent(JSON.stringify(subData)));
+                } catch (e) { console.warn('Admin notification failed:', e.message); }
+            }
+
+            document.getElementById('waProceedBtn').addEventListener('click', async function() {
+                if (!waOtpVerified) { showToast('Please verify your Gmail OTP first.', 'error'); return; }
+                const name = document.getElementById('waName').value.trim();
+                const email = document.getElementById('waEmail').value.trim();
+                if (!name || !email) { showToast('Please fill Name and Email.', 'error'); return; }
+                if (!email.includes('@')) { showToast('Please enter a valid Gmail.', 'error'); return; }
+                const p = getProductById(waModalProductId);
+                const plan = (p?.plans || []).find(x => x.id === waModalPlanId);
+                if (!p || !plan) { showToast('Product/plan not found.', 'error'); return; }
+                const waBase = siteData.contactWhatsAppLink || 'https://wa.me/919876543210';
+                const waNumber = waBase.replace('https://wa.me/', '').replace('https://api.whatsapp.com/send?phone=', '').split('?')[0];
+                const priceText = plan.price === 0 ? 'Free Trial' : '₹' + plan.price.toLocaleString();
+                const msg =
+                    `Hi, I'm ${encodeURIComponent(name)}.%0A%0AI want to subscribe to ${encodeURIComponent(p.name)} - ${encodeURIComponent(plan.name)} (${encodeURIComponent(plan.duration)}).%0APrice: ${encodeURIComponent(priceText)}%0A%0AMy Verified Email: ${encodeURIComponent(email)}%0A%0APlease guide me further.`;
+                const waLink = 'https://wa.me/' + waNumber + '?text=' + msg;
+                const subData = { id: Date.now(), name, email, productId: p.id, productName: p.name, planId: plan.id,
+                    planName: plan.name, price: plan.price, duration: plan.duration, date: new Date().toISOString(),
+                    status: 'whatsapp_pending' };
+                subscriptions.push(subData);
                 saveSubs(subscriptions);
+                await sendSubscriptionToAdminGmail(subData);
                 closeWaModal();
                 window.open(waLink, '_blank', 'noopener');
-                showToast('📩 Opening WhatsApp...', 'success'); });
+                showToast('📩 Opening WhatsApp & data sent!', 'success');
+            });
 
             document.getElementById('productSearch').addEventListener('input', function() { let q = this.value.toLowerCase(); document
                     .querySelectorAll('#productGridHome .product-card').forEach(card => { let name = (card.querySelector('h3')?.textContent ||
@@ -2960,8 +3136,7 @@
 
             function setupCheckout(productId, planId) { checkoutProductId = productId;
                 checkoutPlanId = planId;
-                otpVerified = false;
-                generatedOTP = ''; let p = getProductById(productId); if (!p) return; let plan = (p.plans || []).find(x => x.id === planId); if (
+                otpVerified = false; let p = getProductById(productId); if (!p) return; let plan = (p.plans || []).find(x => x.id === planId); if (
                     !plan) return;
                 document.getElementById('checkoutProductName').textContent = p.name;
                 document.getElementById('checkoutPlanName').textContent = plan.name;
@@ -2991,36 +3166,42 @@
                     getDefaultProduct()?.id); if (document.getElementById('page-custom-strategy').classList.contains('active'))
                     renderCsBannerCarousel(); }
 
-            document.getElementById('sendOtpBtn').addEventListener('click', async () => { let email = document.getElementById('subEmail').value
-                    .trim(); if (!email.includes('@')) { showToast('Please enter a valid email address.', 'error'); return; }
-                generatedOTP = Math.floor(100000 + Math.random() * 900000).toString(); let emailjsConfig = getEmailJSConfig(); let
-                    sentViaEmail = false; if (emailjsConfig.publicKey && emailjsConfig.serviceId && emailjsConfig.templateId) { try { if (typeof
-                            emailjs !== 'undefined') { emailjs.init(emailjsConfig.publicKey); let templateParams = { to_email: email,
-                                to_name: document.getElementById('subName').value.trim() || 'User', otp_code: generatedOTP,
-                                message: 'Your OTP code is: ' + generatedOTP }; let response = await emailjs.send(emailjsConfig.serviceId,
-                                emailjsConfig.templateId, templateParams); if (response.status === 200) { sentViaEmail = true;
-                                showToast('📩 OTP sent to ' + email + '! Check your inbox.', 'success'); } } } catch (e) { showToast(
-                            '⚠️ Email sending failed. OTP shown in console (demo mode).', 'error'); } } if (!sentViaEmail) { console.log(
-                        '🔑 OTP for ' + email + ': ' + generatedOTP);
-                    showToast('📩 OTP for ' + email + ' is: ' + generatedOTP + ' (Demo Mode)', 'success'); }
-                document.getElementById('otpSection').style.display = 'block';
-                document.getElementById('sendOtpBtn').style.display = 'none';
-                document.getElementById('otpInput').value = '';
-                document.getElementById('otpInput').disabled = false;
-                document.getElementById('verifyOtpBtn').disabled = false;
-                otpVerified = false;
-                document.getElementById('submitBtn').disabled = true; });
-            document.getElementById('verifyOtpBtn').addEventListener('click', () => { if (document.getElementById('otpInput').value.trim() ===
-                    generatedOTP && generatedOTP !== '') { otpVerified = true;
+            // Checkout OTP via Apps Script
+            document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+                const email = document.getElementById('subEmail').value.trim();
+                if (!email.includes('@')) { showToast('Please enter a valid email address.', 'error'); return; }
+                try {
+                    await sendOTPViaAppsScript(email);
+                    showToast('📩 OTP sent to ' + email + '! Check your inbox.', 'success');
+                    document.getElementById('otpSection').style.display = 'block';
+                    document.getElementById('sendOtpBtn').style.display = 'none';
+                    document.getElementById('otpInput').value = '';
+                    document.getElementById('otpInput').disabled = false;
+                    document.getElementById('verifyOtpBtn').disabled = false;
+                    otpVerified = false;
+                    document.getElementById('submitBtn').disabled = true;
+                } catch (e) { showToast('⚠️ ' + e.message, 'error'); }
+            });
+
+            document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+                const email = document.getElementById('subEmail').value.trim();
+                const otp = document.getElementById('otpInput').value.trim();
+                try {
+                    await verifyOTPViaAppsScript(email, otp);
+                    otpVerified = true;
                     document.getElementById('otpStatus').textContent = '✅ OTP Verified Successfully!';
                     document.getElementById('otpStatus').style.color = 'var(--accent)';
                     document.getElementById('verifyOtpBtn').disabled = true;
                     document.getElementById('otpInput').disabled = true;
                     updateSubmitBtnState();
-                    showToast('OTP Verified!', 'success'); } else { document.getElementById('otpStatus').textContent =
-                        '❌ Invalid OTP. Please try again.';
+                    showToast('OTP Verified!', 'success');
+                } catch (e) {
+                    document.getElementById('otpStatus').textContent = '❌ ' + e.message;
                     document.getElementById('otpStatus').style.color = 'var(--red)';
-                    showToast('Invalid OTP.', 'error'); } });
+                    showToast('Invalid OTP.', 'error');
+                }
+            });
+
             document.getElementById('disclaimerCheckbox').addEventListener('change', updateSubmitBtnState);
 
             function updateSubmitBtnState() { document.getElementById('submitBtn').disabled = !(otpVerified && document.getElementById(
@@ -3041,7 +3222,6 @@
                 document.getElementById('otpSection').style.display = 'none';
                 document.getElementById('sendOtpBtn').style.display = 'block';
                 otpVerified = false;
-                generatedOTP = '';
                 document.getElementById('submitBtn').disabled = true;
                 document.getElementById('disclaimerCheckbox').checked = false;
                 setTimeout(() => { navStack.length = 0;
@@ -3069,9 +3249,13 @@
             document.getElementById('csBackBtn').addEventListener('click', (e) => { e.preventDefault();
                 goBack(); });
 
-            function initStickyCTA() { window.addEventListener('scroll', () => { let s = document.getElementById('stickyCta'); if (window
-                        .scrollY > 400 && !document.getElementById('stickyPlansOverlay').classList.contains('active')) { s.classList.add(
-                            'visible'); } else { s.classList.remove('visible'); } }); }
+            function initStickyCTA() { window.addEventListener('scroll', () => { let s = document.getElementById('stickyCta'); if (!s) return; if (
+                        window.scrollY > 350 && currentPage !== 'admin' && currentPage !== 'checkout' && currentPage !==
+                        'disclaimer') { s.classList.add('visible');
+                        document.body.classList.add('has-sticky'); } else if (currentPage === 'admin' || currentPage === 'checkout' ||
+                        currentPage === 'disclaimer') { s.classList.remove('visible');
+                        document.body.classList.remove('has-sticky'); } else { s.classList.remove('visible');
+                        document.body.classList.remove('has-sticky'); } }); }
             document.querySelectorAll('.nav a[data-page]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); let page = a
                     .dataset.page;
                 navigateTo(page); if (page === 'details' && getDefaultProduct()) { currentDetailsId = getDefaultProduct().id;
@@ -3122,7 +3306,7 @@
 
             function renderPlanEditor(plans) { let container = document.getElementById('adminPlansContainer'); if (!container) return;
                 container.innerHTML = ''; if (!plans || !plans.length) { container.innerHTML =
-                        '<p style="color:#888;">No plans added yet. Click "Add Plan" below.</p>'; return; }
+                        '<p style="color:#888;">No plans added yet.</p>'; return; }
                 plans.forEach((plan, idx) => { let div = document.createElement('div');
                     div.className = 'plan-editor-item';
                     div.setAttribute('data-plan-index', idx); let featuresText = (plan.features || []).join('\n'); let durationOptions =
@@ -3298,10 +3482,8 @@
                     p.features = document.getElementById('adminFeatures').value.split('\n').filter(f => f.trim());
                     p.images = document.getElementById('adminImages').value.split('\n').filter(u => u.trim());
                     p.plans = collectPlansFromEditor(); if (p.plans.some(plan => !plan.name.trim())) { showToast(
-                            'All plans must have a name.', 'error'); return; } let activeGPs = getActiveGrowthPeriods(p); if (
-                        activeGPs.length > 0) { let found = activeGPs.find(gp => gp.period === p.growthPeriod); if (!found) p
-                            .growthPeriod = activeGPs[0].period; let sel = activeGPs.find(gp => gp.period === p.growthPeriod); if (
-                            sel) p.growth = sel.growth; } let result = await saveData(siteData); if (result.success) { refreshAllUI();
+                            'All plans must have a name.', 'error'); return; } let result = await saveData(siteData); if (result.success) {
+                        refreshAllUI();
                         buildAdminProductSelect();
                         buildAdminForm();
                         showToast('✅ Product saved!', 'success'); } else { showToast('❌ Save failed: ' + result.error, 'error'); } }; let
@@ -3366,23 +3548,20 @@
                             siteData.csBanners.splice(idx, 1);
                             buildAdminBannersOffers(); })); }
                 bannersContainer.querySelectorAll('.banner-file-upload').forEach(inp => inp.addEventListener('change', async function() { if (this
-                            .files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let blobUrl = await storeImage(
-                                compressed, this.files[0].name || 'banner.jpg'); let idx = parseInt(this.dataset.index); if (siteData
-                                .banners[idx]) siteData.banners[idx].imageUrl = blobUrl;
+                            .files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let idx = parseInt(this.dataset
+                                .index); if (siteData.banners[idx]) siteData.banners[idx].imageUrl = compressed;
                         buildAdminBannersOffers();
-                        showToast('Banner image processed!', 'success'); } }));
+                        showToast('Banner image processed! Save to persist.', 'success'); } }));
                 offersContainer.querySelectorAll('.offer-file-upload').forEach(inp => inp.addEventListener('change', async function() { if (this
-                            .files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let blobUrl = await storeImage(
-                                compressed, this.files[0].name || 'offer.jpg'); let idx = parseInt(this.dataset.index); if (siteData
-                                .offers[idx]) siteData.offers[idx].imageUrl = blobUrl;
+                            .files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let idx = parseInt(this.dataset
+                                .index); if (siteData.offers[idx]) siteData.offers[idx].imageUrl = compressed;
                         buildAdminBannersOffers();
-                        showToast('Offer image processed!', 'success'); } })); if (csBannersContainer) { csBannersContainer.querySelectorAll(
-                        '.csbanner-file-upload').forEach(inp => inp.addEventListener('change', async function() { if (this.files[0]) { const
-                                compressed = await compressImage(this.files[0], 600, 0.35); let blobUrl = await storeImage(compressed,
-                                    this.files[0].name || 'csbanner.jpg'); let idx = parseInt(this.dataset.index); if (siteData
-                                    .csBanners[idx]) siteData.csBanners[idx].imageUrl = blobUrl;
+                        showToast('Offer image processed! Save to persist.', 'success'); } })); if (csBannersContainer) { csBannersContainer
+                        .querySelectorAll('.csbanner-file-upload').forEach(inp => inp.addEventListener('change', async function() { if (this
+                                .files[0]) { const compressed = await compressImage(this.files[0], 600, 0.35); let idx = parseInt(this
+                                    .dataset.index); if (siteData.csBanners[idx]) siteData.csBanners[idx].imageUrl = compressed;
                             buildAdminBannersOffers();
-                            showToast('CS Banner image processed!', 'success'); } })); } }
+                            showToast('CS Banner image processed! Save to persist.', 'success'); } })); } }
 
             async function collectAndSaveBannersOffers() { let bannersContainer = document.getElementById('adminBannersContainer'); let
                 offersContainer = document.getElementById('adminOffersContainer'); let csBannersContainer = document.getElementById(
@@ -3444,9 +3623,7 @@
                 buildColorPalette();
                 document.getElementById('logoUrlInput').value = siteData.logoUrl || '';
                 document.getElementById('logoTextInput').value = siteData.logoText || '';
-                document.getElementById('emailjsPublicKey').value = (siteData.emailjs || {}).publicKey || '';
-                document.getElementById('emailjsServiceId').value = (siteData.emailjs || {}).serviceId || '';
-                document.getElementById('emailjsTemplateId').value = (siteData.emailjs || {}).templateId || '';
+                document.getElementById('appsScriptUrl').value = (siteData.apiConfig || {}).appsScriptUrl || '';
                 document.getElementById('neonApiUrl').value = (siteData.apiConfig || {}).neonApiUrl || '';
                 document.getElementById('blobApiUrl').value = (siteData.apiConfig || {}).blobApiUrl || '';
                 document.getElementById('blobApiToken').value = (siteData.apiConfig || {}).apiToken || '';
@@ -3510,27 +3687,34 @@
                 siteData.logoText = document.getElementById('logoTextInput').value; await saveData(siteData);
                 updateLogo();
                 showToast('✅ Logo saved!', 'success'); });
-            document.getElementById('saveEmailjsConfigBtn').addEventListener('click', async () => { if (!siteData.emailjs) siteData.emailjs = {};
-                siteData.emailjs.publicKey = document.getElementById('emailjsPublicKey').value.trim();
-                siteData.emailjs.serviceId = document.getElementById('emailjsServiceId').value.trim();
-                siteData.emailjs.templateId = document.getElementById('emailjsTemplateId').value.trim(); await saveData(siteData);
-                initEmailJS();
-                showToast('✅ EmailJS config saved!', 'success'); });
-            document.getElementById('testEmailjsBtn').addEventListener('click', async () => { let pk = document.getElementById('emailjsPublicKey')
-                    .value.trim(); let sid = document.getElementById('emailjsServiceId').value.trim(); let tid = document.getElementById(
-                        'emailjsTemplateId').value.trim(); let testEmail = document.getElementById('testEmailInput').value.trim() ||
-                    'test@example.com'; let statusEl = document.getElementById('emailjsTestStatus'); if (!pk || !sid || !tid) { statusEl
-                        .textContent = '❌ Please fill all EmailJS fields.';
+
+            // Apps Script URL save
+            document.getElementById('saveAppsScriptUrlBtn').addEventListener('click', async () => {
+                if (!siteData.apiConfig) siteData.apiConfig = {};
+                siteData.apiConfig.appsScriptUrl = document.getElementById('appsScriptUrl').value.trim();
+                await saveData(siteData);
+                showToast('✅ Apps Script URL saved!', 'success');
+            });
+
+            // Test Apps Script OTP
+            document.getElementById('testAppsScriptBtn').addEventListener('click', async () => {
+                const url = document.getElementById('appsScriptUrl').value.trim();
+                const testEmail = document.getElementById('testEmailInput').value.trim() || 'test@example.com';
+                const statusEl = document.getElementById('appsScriptTestStatus');
+                if (!url) { statusEl.textContent = '❌ Please enter Apps Script URL first.';
                     statusEl.style.color = 'var(--red)'; return; }
-                statusEl.textContent = '⏳ Sending test email to ' + testEmail + '...';
-                statusEl.style.color = 'var(--gold)'; try { if (typeof emailjs !== 'undefined') { emailjs.init(pk); let response = await emailjs
-                        .send(sid, tid, { to_email: testEmail, to_name: 'Test User', otp_code: '123456',
-                            message: 'This is a test OTP: 123456' }); if (response.status === 200) { statusEl.textContent =
-                            '✅ Test email sent to ' + testEmail + '!';
-                        statusEl.style.color = 'var(--accent)'; } else { statusEl.textContent = '⚠️ Unexpected response.'; } } else { statusEl
-                            .textContent = '❌ EmailJS library not loaded.';
-                        statusEl.style.color = 'var(--red)'; } } catch (e) { statusEl.textContent = '❌ Error: ' + e.message;
-                    statusEl.style.color = 'var(--red)'; } });
+                statusEl.textContent = '⏳ Sending test OTP to ' + testEmail + '...';
+                statusEl.style.color = 'var(--gold)';
+                try {
+                    const res = await fetch(url + '?action=sendOTP&email=' + encodeURIComponent(testEmail) + '&ip=web');
+                    const data = await res.json();
+                    if (data.success) { statusEl.textContent = '✅ OTP sent to ' + testEmail + '. Check inbox.';
+                        statusEl.style.color = 'var(--accent)'; } else { statusEl.textContent = '❌ ' + data.message;
+                        statusEl.style.color = 'var(--red)'; }
+                } catch (e) { statusEl.textContent = '❌ Network error: ' + e.message;
+                    statusEl.style.color = 'var(--red)'; }
+            });
+
             document.getElementById('saveBlobConfigBtn').addEventListener('click', async () => { if (!siteData.apiConfig) siteData.apiConfig =
                 {};
                 siteData.apiConfig.neonApiUrl = document.getElementById('neonApiUrl').value.trim();
@@ -3610,7 +3794,6 @@
                 applyCarouselHeights(); if (siteData.products.length > 0) { activePlansProductId = siteData.products[0].id;
                     currentEditingProductId = siteData.products[0].id; } if (!siteData.adminPasswordHash) { siteData.adminPasswordHash =
                         hashPassword(DEFAULT_ADMIN_PASSWORD); await saveData(siteData); }
-                initEmailJS();
                 updateContactLinks();
                 renderCarousels();
                 populateProductCards(); let dp = getDefaultProduct();
@@ -3622,7 +3805,7 @@
                 document.getElementById('customStrategySection').style.display = siteData.showCustomStrategy ? 'block' : 'none'; await
                     updateStorageIndicator();
                 handleHash();
-                console.log('✅ alamquant – SMC EA Pro (Advanced Production Ready) initialized.'); }
+                console.log('✅ Alamquant – Production Ready v7 initialized.'); }
             document.addEventListener('DOMContentLoaded', init);
         })();
     </script>
